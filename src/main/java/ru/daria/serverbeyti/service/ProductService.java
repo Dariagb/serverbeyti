@@ -1,48 +1,63 @@
 package ru.daria.serverbeyti.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
+import ru.daria.serverbeyti.mappers.ProductMapper;
 import ru.daria.serverbeyti.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public abstract class ProductService {
-  @Autowired
-    private  ProductRepository productRepository;
+@RequiredArgsConstructor
 
+public class ProductService {
+    @Autowired
+    private ProductRepository productRepository;
 
-    public void saveProduct(){
+    public void saveProduct() {
         Product product = new Product();
         productRepository.save(product);
 
     }
 
-    public void getProduct(int number, int volume){
+    public void getProduct(int number, int volume) throws InsufficientVolumeException, ProductNotFoundException {
+        Optional<Product> productOptional = productRepository.findById(number);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            int currentVolume = product.getVolume();
+            if (volume < currentVolume) {
+                product.setVolume(currentVolume - volume);
+                productRepository.save(product);
+            } else {
+                throw new InsufficientVolumeException("Запрошенный вами объем больше, чем есть в наличии");
+            }
+        } else {
+            throw new ProductNotFoundException("Продукт с номером: " + number + " отсутствует");
+        }
     }
 
-    public List<Product> readAll(){
-        return productRepository.findAll();
+    public List<ProductDTO> readAll() {
+        var products = productRepository.findAll();
+        return ProductMapper.INSTANCE.toProductDTO(products);
     }
 
-    public Product updateProduct(Product product){
+    public Product updateProduct(Product product) {
         return productRepository.save(product);
     }
 
-
     public Product create(ProductDTO dto) {
-     Product product = Product.builder()
-             .name(dto.getName())
-             .volume(dto.getVolume())
-             .build();
-     return productRepository.save(product);
+        Product product = Product.builder()
+                .name(dto.getName())
+                .volume(dto.getVolume())
+                .build();
+        return productRepository.save(product);
     }
-    public void delete(int id){
+
+    public void delete(int id) {
         productRepository.deleteById(id);
     }
 }
