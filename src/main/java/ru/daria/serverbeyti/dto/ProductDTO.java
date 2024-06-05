@@ -1,9 +1,12 @@
 package ru.daria.serverbeyti.dto;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDTO {
-    private String name;
-    private int volume;
+     String name;
+     int volume;
 }
