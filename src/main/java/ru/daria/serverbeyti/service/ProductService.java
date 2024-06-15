@@ -37,6 +37,7 @@ public class ProductService {
             throw new ProductNotFoundException("Продукт с номером: " + number + " отсутствует");
         }
     }
+
     public List<ProductDTO> readAll() {
         var products = productRepository.findAll();
         return products.stream()

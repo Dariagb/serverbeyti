@@ -8,5 +8,4 @@ public class ServerbeytiApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServerbeytiApplication.class, args);
     }
-
 }
