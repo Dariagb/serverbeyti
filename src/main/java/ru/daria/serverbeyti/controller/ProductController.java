@@ -16,10 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("product")
 public class ProductController {
+
     private final ProductService productService;
 
     @GetMapping("/id")
-    public ResponseEntity<?> getProductById(@RequestParam Integer shadeNumber, @RequestParam Integer volume) {
+    public ResponseEntity<?> getProductBy(@RequestParam Integer shadeNumber, @RequestParam Integer volume) {
         try {
             productService.getProduct(shadeNumber, volume);
         } catch (Exception | InsufficientVolumeException | ProductNotFoundException e) {

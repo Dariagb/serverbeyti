@@ -1,12 +1,13 @@
 package ru.daria.serverbeyti.mappers;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.model.Product;
 
-@Mapper
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface ProductMapper {
-    ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
+    List<ProductDTO> toProductDTOs(List<Product> products);
     ProductDTO toProductDTO(Product product);
 }

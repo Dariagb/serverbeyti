@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    Optional<Product> findByNumber(int number);
+    Optional<Product> findByShadeNumber(int number);
 }
+

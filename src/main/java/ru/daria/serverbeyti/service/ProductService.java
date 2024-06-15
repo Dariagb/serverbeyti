@@ -1,21 +1,21 @@
 package ru.daria.serverbeyti.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.mappers.ProductMapper;
 import ru.daria.serverbeyti.model.Product;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    @Autowired
-    private ProductRepository productRepository;
+
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     public void saveProduct() {
         Product product = new Product();
@@ -23,7 +23,7 @@ public class ProductService {
     }
 
     public void getProduct(int number, int volume) throws InsufficientVolumeException, ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findByNumber(number);
+        Optional<Product> productOptional = productRepository.findByShadeNumber(number);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             int currentVolume = product.getVolume();
@@ -37,11 +37,10 @@ public class ProductService {
             throw new ProductNotFoundException("Продукт с номером: " + number + " отсутствует");
         }
     }
+
     public List<ProductDTO> readAll() {
-        var products = productRepository.findAll();
-        return products.stream()
-                .map(ProductMapper.INSTANCE::toProductDTO)
-                .collect(Collectors.toList());
+        List<Product> products = productRepository.findAll();
+        return productMapper.toProductDTOs(products);
     }
 
     public Product updateProduct(Product product) {

@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @Table(name = "product")
@@ -24,7 +23,7 @@ public class Product {
     private String name;
 
     @Column(name = "shade_number")
-    private int shade_number;
+    private int shadeNumber;
 
     @Column(name = "volume")
     private int volume;
