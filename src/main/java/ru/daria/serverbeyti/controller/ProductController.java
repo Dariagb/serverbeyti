@@ -28,9 +28,9 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping("/id")
-    public ResponseEntity<?> getProductPaint(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume ) {
+    public ResponseEntity<?> getProductPaint(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume) {
         try {
-            productService.getProductByShadeNumber(name,shadeNumber, volume);
+            productService.getProductByShadeNumber(name, shadeNumber, volume);
         } catch (Exception | InsufficientVolumeException | ProductNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -55,6 +55,9 @@ public class ProductController {
         return new ResponseEntity<>(productService.readAllProductDTO(), HttpStatus.OK);
     }
 
+    @Operation(summary = "Обновить наличие краски")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "\n" + "Успешно обновлен"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")})
     @PutMapping
     public ResponseEntity<Product> updateProductPoint(@RequestBody Product product) {
         return new ResponseEntity<>(productService.updateProductPaint(product), HttpStatus.OK);
