@@ -28,7 +28,7 @@ public class ProductService {
         Optional<Product> productOptional = productRepository.findByShadeNumber(shadeNumber);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
-           Long currentVolume = product.getVolume();
+            Long currentVolume = product.getVolume();
             if (volume < currentVolume) {
                 product.setVolume(currentVolume - volume);
                 productRepository.save(product);
@@ -40,37 +40,21 @@ public class ProductService {
         }
     }
 
-//    public List<ProductDTO> readAllProductDTO() {
-//        List<Product> products = productRepository.findAll();
-//        return ProductMapper.INSTANCE.toProductDTOs(products);
-//    }
-
-    public Product updateProduct(Product product) {
+    public Product updateProductPaint(Product product) {
         return productRepository.save(product);
     }
-//
-//    public Product createProductDTO(ProductDTO dto) {
-//        Product product = Product.builder()
-//                .name(dto.getName())
-//                .volume(dto.getVolume())
-//                .shadeNumber(dto.getShadeNumber())
-//                .build();
-//        return productRepository.save(product);
-//    }
-public Product createProduct(ProductDTO dto) {
-    Product product = productMapper.toProduct(dto);
-    return productRepository.save(product);
-}
+
+    public Product createProductPoint(ProductDTO dto) {
+        Product product = productMapper.toProduct(dto);
+        return productRepository.save(product);
+    }
+
     public List<ProductDTO> readAllProductDTO() {
         List<Product> products = productRepository.findAll();
         return productMapper.toProductDTOs(products);
     }
-//public Product createProduct(ProductDTO dto) {
-//    Product product = ProductMapper.INSTANCE.toProduct(dto);
-//    return productRepository.save(product);
-//}
 
-    public void deleteById(Long id) {
+    public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
 }

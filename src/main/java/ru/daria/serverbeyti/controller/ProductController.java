@@ -28,7 +28,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping("/id")
-    public ResponseEntity<?> getProduct(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume ) {
+    public ResponseEntity<?> getProductPaint(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume ) {
         try {
             productService.getProductByShadeNumber(name,shadeNumber, volume);
         } catch (Exception | InsufficientVolumeException | ProductNotFoundException e) {
@@ -42,8 +42,8 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO dto) {
-        return new ResponseEntity<>(productService.createProduct(dto), HttpStatus.OK);
+    public ResponseEntity<Product> createProductPoint(@RequestBody ProductDTO dto) {
+        return new ResponseEntity<>(productService.createProductPoint(dto), HttpStatus.OK);
     }
 
     @Operation(summary = "Получить все материалы", description = "Возвращает продукт DTO")
@@ -51,13 +51,13 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> readAll() {
+    public ResponseEntity<List<ProductDTO>> readAllProductPoint() {
         return new ResponseEntity<>(productService.readAllProductDTO(), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.OK);
+    public ResponseEntity<Product> updateProductPoint(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.updateProductPaint(product), HttpStatus.OK);
     }
 
     @Operation(summary = "Удалить продукт", description = "Удаляем продукт по id")
@@ -65,8 +65,8 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @DeleteMapping("/{id}")
-    public HttpStatus delete(@PathVariable Long id) {
-        productService.deleteById(id);
+    public HttpStatus deleteProductPoint(@PathVariable Long id) {
+        productService.deleteProductById(id);
         return HttpStatus.OK;
     }
 }
