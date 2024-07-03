@@ -7,7 +7,7 @@ import ru.daria.serverbeyti.model.Product;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
-    Optional<Product> findByShadeNumber(int number);
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    Optional<Product> findByShadeNumber(Long shadeNumber);
 }
 

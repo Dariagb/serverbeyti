@@ -1,6 +1,5 @@
 package ru.daria.serverbeyti.model;
 
-import ch.qos.logback.classic.spi.ConfiguratorRank;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,17 +16,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "shade_number")
-    private int shadeNumber;
+    private Long shadeNumber;
 
     @Column(name = "volume")
-    private int volume;
+    private Long volume;
 
     @Column(name = "country")
     private String country;
+
+    @Column(name = "price")
+    private Long price;
 }

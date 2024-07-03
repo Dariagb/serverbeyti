@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.model.Product;
-import ru.daria.serverbeyti.service.InsufficientVolumeException;
-import ru.daria.serverbeyti.service.ProductNotFoundException;
+import ru.daria.serverbeyti.service.exception.InsufficientVolumeException;
+import ru.daria.serverbeyti.service.exception.ProductNotFoundException;
 import ru.daria.serverbeyti.service.ProductService;
 
 import java.util.List;
@@ -19,40 +19,40 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("product")
-@Tag(name = "Products API", description = "Manage user tasks.")
+@Tag(name = "Products API", description = "Управление задачами пользователя.")
 public class ProductController {
     private final ProductService productService;
 
-    @Operation(summary = "Get a product by shadeNumber, volume", description = "Returns a product as per the volume")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully retrieved"),
-            @ApiResponse(responseCode = "404", description = "Not found -The product was not found")
+    @Operation(summary = "Получаем  необходимый объем по имени, номеру оттенка,", description = "Возвращает материал согласно объёму")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping("/id")
-    public ResponseEntity<?> getProductBy(@RequestParam Integer shadeNumber, @RequestParam Integer volume) {
+    public ResponseEntity<?> getProduct(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume ) {
         try {
-            productService.getProduct(shadeNumber, volume);
+            productService.getProductByShadeNumber(name,shadeNumber, volume);
         } catch (Exception | InsufficientVolumeException | ProductNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "A new product is created containing name and volume parameters")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully retrieved"),
-            @ApiResponse(responseCode = "404", description = "Not found -The product was not found")
+    @Operation(summary = "Создается новый продукт, содержащий параметры имени и объема.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "\n" + "Успешно получен"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody ProductDTO dto) {
-        return new ResponseEntity<>(productService.create(dto), HttpStatus.OK);
+        return new ResponseEntity<>(productService.createProduct(dto), HttpStatus.OK);
     }
 
-    @Operation(summary = "Get all product", description = "Returns a productDTO")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully retrieved"),
-            @ApiResponse(responseCode = "404", description = "Not found -The product was not found")
+    @Operation(summary = "Получить все материалы", description = "Возвращает продукт DTO")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "\n" + "Успешно получен"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping
     public ResponseEntity<List<ProductDTO>> readAll() {
-        return new ResponseEntity<>(productService.readAll(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.readAllProductDTO(), HttpStatus.OK);
     }
 
     @PutMapping
@@ -60,14 +60,13 @@ public class ProductController {
         return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.OK);
     }
 
-
-    @Operation(summary = "Delete products", description = "Delete products by id")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Successfully retrieved"),
-            @ApiResponse(responseCode = "404", description = "Not found -The product was not found")
+    @Operation(summary = "Удалить продукт", description = "Удаляем продукт по id")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно завершон"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @DeleteMapping("/{id}")
-    public HttpStatus delete(@PathVariable Integer id) {
-        productService.delete(id);
+    public HttpStatus delete(@PathVariable Long id) {
+        productService.deleteById(id);
         return HttpStatus.OK;
     }
 }

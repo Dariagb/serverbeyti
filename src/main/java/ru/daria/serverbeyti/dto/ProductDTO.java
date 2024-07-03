@@ -7,6 +7,9 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDTO {
-     String name;
-     int volume;
+    Long id;
+    String name;
+    Long volume;
+    Long shadeNumber;
+
 }
