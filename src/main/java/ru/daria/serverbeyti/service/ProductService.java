@@ -24,20 +24,24 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void getProductByShadeNumber(String name, Long shadeNumber, Long volume) throws InsufficientVolumeException, ProductNotFoundException {
-        Optional<Product> productOptional = productRepository.findByShadeNumber(shadeNumber);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            Long currentVolume = product.getVolume();
-            if (volume < currentVolume) {
-                product.setVolume(currentVolume - volume);
-                productRepository.save(product);
-            } else {
-                throw new InsufficientVolumeException("Запрошенный вами объем больше, чем есть в наличии");
-            }
-        } else {
-            throw new ProductNotFoundException("Продукт с номером: " + shadeNumber + " отсутствует");
-        }
+//    public void getPaintByShadeNumberAndName(String name, Long shadeNumber, Long volume) throws InsufficientVolumeException, ProductNotFoundException {
+//        Optional<Product> productOptional = productRepository.findByShadeNumber(shadeNumber);
+//        if (productOptional.isPresent()) {
+//            Product product = productOptional.get();
+//            Long currentVolume = product.getVolume();
+//            if (volume < currentVolume) {
+//                product.setVolume(currentVolume - volume);
+//                productRepository.save(product);
+//            } else {
+//                throw new InsufficientVolumeException("Запрошенный вами объем больше, чем есть в наличии");
+//            }
+//        } else {
+//            throw new ProductNotFoundException("Продукт с номером: " + shadeNumber + " отсутствует");
+//        }
+//    }
+
+    public Optional<Product> getPaintByShadeNumberAndName(String name, Long shadeNumber) {
+        return productRepository.getPaintByShadeNumberAndName(name,shadeNumber);
     }
 
     public Product updateProductPaint(Product product) {
