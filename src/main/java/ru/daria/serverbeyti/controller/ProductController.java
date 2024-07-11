@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.model.Product;
 
@@ -23,20 +24,7 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
-
-//    @Operation(summary = "Получаем  необходимый объем по имени, номеру оттенка,", description = "Возвращает материал согласно объёму")
-//    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
-//            @ApiResponse(responseCode = "404", description = "Товар не найден")
-//    })
-//    @GetMapping("/id")
-//    public ResponseEntity<?> getPaint(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume) {
-//        try {
-//            productService.getPaintByShadeNumberAndName(name, shadeNumber, volume);
-//        } catch (Exception | InsufficientVolumeException | ProductNotFoundException e) {
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-//        }
-//        return ResponseEntity.ok().build();
-//    }
+    private final ProductRepository productRepository;
 
     @Operation(summary = "Создается новый продукт, содержащий параметры имени и объема.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
@@ -47,8 +35,31 @@ public class ProductController {
         return new ResponseEntity<>(productService.createProductPoint(dto), HttpStatus.OK);
     }
 
+    @Operation(summary = "Обновить наличие объема краски")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Успешно обновлен"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")
+    })
+    @PutMapping("/id")
+    public ResponseEntity<?> updatePaint(@RequestParam String name, @RequestParam long shadeNumber, @RequestParam long volume) {
+        try {
+            productRepository.updatePaint(name, shadeNumber, volume);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Operation(summary = "Обновить наличие краски")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "\n" + "Успешно обновлен"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")})
+    @PutMapping
+    public ResponseEntity<Product> updateProductPoint(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.updateProductPaint(product), HttpStatus.OK);
+    }
+
     @Operation(summary = "Получить все материалы", description = "Возвращает продукт DTO")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description ="Успешно получен"),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping
@@ -56,29 +67,18 @@ public class ProductController {
         return new ResponseEntity<>(productService.readAllProductDTO(), HttpStatus.OK);
     }
 
-//    @GetMapping("/{name}/{shadeNumber}")
-//    public ResponseEntity<Product> getProductByShadeNumberAndName(@PathVariable String name, @PathVariable Long shadeNumber) {
-//        Optional<Product> product = productService.getPaintByShadeNumberAndName(name, shadeNumber);
-//        return product.map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-@GetMapping("/{name}/{shadeNumber}") // получить все
-public ResponseEntity<Product> getPaint(@PathVariable String name, @PathVariable Long shadeNumber) {
-    Optional<Product> ts = productService.getPaintByShadeNumberAndName(name,shadeNumber);
+    @Operation(summary = "Получаем  необходимый объем по имени и номеру оттенка,", description = "Возвращает материал согласно объёму")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
+            @ApiResponse(responseCode = "404", description = "Товар не найден")
+    })
+    @GetMapping("/{name}/{shadeNumber}")
+    public ResponseEntity<ProductDTO> getPaint(@PathVariable String name, @PathVariable Long shadeNumber) {
+        Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(name, shadeNumber);
 
-    if (ts.isPresent()) {
-        return ResponseEntity.status(HttpStatus.OK).body(ts.get());
-    }
-
-    return ResponseEntity.notFound().build();
-}
-
-    @Operation(summary = "Обновить наличие краски")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description ="Успешно обновлен"),
-            @ApiResponse(responseCode = "404", description = "Товар не найден")})
-    @PutMapping
-    public ResponseEntity<Product> updatePaint(@RequestBody Product product) {
-        return new ResponseEntity<>(productService.updateProductPaint(product), HttpStatus.OK);
+        if (paint.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(paint.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Удалить продукт", description = "Удаляем продукт по id")

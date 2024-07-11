@@ -1,6 +1,6 @@
-package ru.daria.serverbeyti.service.exception;
+package ru.daria.serverbeyti.exception;
 
-public class InsufficientVolumeException extends Throwable {
+public class InsufficientVolumeException extends RuntimeException {
     public InsufficientVolumeException(String string) {
     }
 }

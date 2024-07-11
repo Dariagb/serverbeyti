@@ -1,6 +1,6 @@
-package ru.daria.serverbeyti.service.exception;
+package ru.daria.serverbeyti.exception;
 
-public class ProductNotFoundException extends Throwable {
+public class ProductNotFoundException extends RuntimeException {
     public ProductNotFoundException(String string) {
     }
 }
