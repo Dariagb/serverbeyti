@@ -26,9 +26,9 @@ public class ProductController {
     private final ProductService productService;
     private final ProductRepository productRepository;
 
-    @Operation(summary = "Создается новый продукт, содержащий параметры имени и объема.")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
-            @ApiResponse(responseCode = "404", description = "Товар не найден")
+    @Operation(summary = "Создать новый продукт, содержащий параметры имени,номера оттенка и объема.")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно создан"),
+            @ApiResponse(responseCode = "404", description = "Товар не создан")
     })
     @PostMapping
     public ResponseEntity<Product> createPaint(@RequestBody ProductDTO dto) {
@@ -41,7 +41,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @PutMapping("/id")
-    public ResponseEntity<?> updatePaint(@RequestParam String name, @RequestParam long shadeNumber, @RequestParam long volume) {
+    public ResponseEntity<?> updatePaint(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume) {
         try {
             productRepository.updatePaint(name, shadeNumber, volume);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -50,7 +50,7 @@ public class ProductController {
         }
     }
 
-    @Operation(summary = "Обновить наличие краски")
+    @Operation(summary = "Обновить наличие краски по всем параметрам")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "\n" + "Успешно обновлен"),
             @ApiResponse(responseCode = "404", description = "Товар не найден")})
     @PutMapping
@@ -67,7 +67,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.readAllProductDTO(), HttpStatus.OK);
     }
 
-    @Operation(summary = "Получаем  необходимый объем по имени и номеру оттенка,", description = "Возвращает материал согласно объёму")
+    @Operation(summary = "Получить  необходимый объем по имени и номеру оттенка,", description = "Возвращает материал согласно объёму")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
@@ -82,7 +82,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Удалить продукт", description = "Удаляем продукт по id")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно завершон"),
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно удален"),
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @DeleteMapping("/{id}")
