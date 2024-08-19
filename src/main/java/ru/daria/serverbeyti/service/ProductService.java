@@ -19,12 +19,15 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public void saveProduct() {
-        Product product = new Product();
+//    public void saveProduct() {
+//        Product product = new Product();
+//        productRepository.save(product);
+//    }
+    public void saveProduct(Product product) { // Добавлено product в аргументы
         productRepository.save(product);
     }
 
-    public Product getProductByShadeNumberAndName(String name, Long shadeNumber, Long volume) throws InsufficientVolumeException, ProductNotFoundException {
+    public Product getProductByShadeNumberAndName(Long shadeNumber, String name, Long volume) throws InsufficientVolumeException, ProductNotFoundException {
         Optional<Product> productOptional = productRepository.findByShadeNumberAndName(shadeNumber, name);
         if (productOptional.isPresent()) {
             Product product = productOptional.get();

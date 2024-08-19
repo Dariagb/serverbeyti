@@ -75,10 +75,8 @@ public class ProductController {
     public ResponseEntity<ProductDTO> getPaint(@PathVariable String name, @PathVariable Long shadeNumber) {
         Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(name, shadeNumber);
 
-        if (paint.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(paint.get());
-        }
-        return ResponseEntity.notFound().build();
+        return paint.map(p -> ResponseEntity.status(HttpStatus.OK).body(p))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary = "Удалить продукт", description = "Удаляем продукт по id")
