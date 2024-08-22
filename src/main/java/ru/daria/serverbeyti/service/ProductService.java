@@ -19,11 +19,8 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-//    public void saveProduct() {
-//        Product product = new Product();
-//        productRepository.save(product);
-//    }
-    public void saveProduct(Product product) { // Добавлено product в аргументы
+    public void saveProduct() {
+        Product product = new Product();
         productRepository.save(product);
     }
 
@@ -43,8 +40,12 @@ public class ProductService {
         }
     }
 
-    public Optional<ProductDTO> getPaintByShadeNumberAndName(String name, Long shadeNumber) {
-        return productRepository.getPaintByShadeNumberAndName(name, shadeNumber);
+//    public Optional<ProductDTO> getPaintByShadeNumberAndName(String name, Long shadeNumber) {
+//        return productRepository.getPaintByShadeNumberAndName(name, shadeNumber);
+//    }
+    public Optional<ProductDTO> getPaintByShadeNumberAndName(Long shadeNumber, String name) {
+        return productRepository.findByShadeNumberAndName(shadeNumber, name)
+                .map(productMapper::toProductDTO);
     }
 
     public Product updateProductPaint(Product product) {

@@ -72,8 +72,8 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping("/{name}/{shadeNumber}")
-    public ResponseEntity<ProductDTO> getPaint(@PathVariable String name, @PathVariable Long shadeNumber) {
-        Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(name, shadeNumber);
+    public ResponseEntity<ProductDTO> getPaint(@PathVariable Long shadeNumber,@PathVariable String name) {
+        Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(shadeNumber,name);
 
         return paint.map(p -> ResponseEntity.status(HttpStatus.OK).body(p))
                 .orElseGet(() -> ResponseEntity.notFound().build());

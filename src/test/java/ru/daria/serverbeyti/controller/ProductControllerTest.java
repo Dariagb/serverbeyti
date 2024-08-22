@@ -5,12 +5,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import ru.daria.serverbeyti.AbstractSpringBootTest;
+import ru.daria.serverbeyti.TestBeans;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.model.Product;
@@ -24,23 +31,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
-
-@WebMvcTest(ProductController.class)
-@MockBean(ProductService.class)
-@MockBean(ProductRepository.class)
-class ProductControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+class ProductControllerTest extends AbstractSpringBootTest {
 
     @Autowired
     private ProductController controller;
-
-    @MockBean
-    private ProductService productService;
-
-    @MockBean
-    private ProductRepository productRepository;
 
     @Test
     public void ProductController_сreatePaint_test() {
@@ -143,13 +137,13 @@ class ProductControllerTest {
         dto.setShadeNumber(shadeNumber);
         dto.setVolume(1000L);
 
-        when(productService.getPaintByShadeNumberAndName(name, shadeNumber)).thenReturn(Optional.of(dto));
+        when(productService.getPaintByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.of(dto));
 
-        ResponseEntity<ProductDTO> response = controller.getPaint(name, shadeNumber);
+        ResponseEntity<ProductDTO> response = controller.getPaint(shadeNumber,name);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(dto, response.getBody());
-        verify(productService, times(1)).getPaintByShadeNumberAndName(name, shadeNumber);
+        verify(productService, times(1)).getPaintByShadeNumberAndName(shadeNumber,name);
     }
 
     @Test
@@ -157,13 +151,13 @@ class ProductControllerTest {
         String name = "Olin";
         Long shadeNumber = 123L;
 
-        when(productService.getPaintByShadeNumberAndName(name, shadeNumber)).thenReturn(Optional.empty());
+        when(productService.getPaintByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.empty());
 
-        ResponseEntity<ProductDTO> response = controller.getPaint(name, shadeNumber);
+        ResponseEntity<ProductDTO> response = controller.getPaint(shadeNumber,name);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
-        verify(productService, times(1)).getPaintByShadeNumberAndName(name, shadeNumber);
+        verify(productService, times(1)).getPaintByShadeNumberAndName(shadeNumber,name);
     }
 
     @Test

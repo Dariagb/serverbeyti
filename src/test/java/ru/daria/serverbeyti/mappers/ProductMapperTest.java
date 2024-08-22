@@ -2,21 +2,29 @@ package ru.daria.serverbeyti.mappers;
 
 import org.junit.jupiter.api.Test;
 
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.boot.test.context.TestComponent;
+import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.model.Product;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-public class ProductMapperTest {
 
-    @Autowired
+
+public class ProductMapperTest extends AbstractSpringBootTest {
+
+   @Autowired
     private ProductMapper productMapper;
 
     @Test
@@ -24,8 +32,8 @@ public class ProductMapperTest {
         Product product = new Product();
         product.setId(1L);
         product.setName("Olin");
-        product.setShadeNumber(45l);
-        product.setVolume(67l);
+        product.setShadeNumber(45L);
+        product.setVolume(67L);
 
         ProductDTO productDTO = productMapper.toProductDTO(product);
 
