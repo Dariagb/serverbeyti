@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+//@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class ProductRepositoryTest {
     @Autowired
     private ProductRepository productRepository;
@@ -36,6 +36,7 @@ class ProductRepositoryTest {
         productRepository.save(product2);
 
         Optional<Product> product1 = productRepository.findByShadeNumberAndName(product.getShadeNumber(), product.getName());
+
         assertTrue(product1.isPresent());
         assertEquals(product1.get().getName(), product.getName());
         assertEquals(product1.get().getShadeNumber(), product.getShadeNumber());
@@ -51,6 +52,7 @@ class ProductRepositoryTest {
                 .build();
         productRepository.save(product2);
         Optional<ProductDTO> productDTO = productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber());
+
         assertTrue(productDTO.isPresent());
         assertEquals(productDTO.get().getName(), product2.getName());
         assertEquals(productDTO.get().getShadeNumber(), product2.getShadeNumber());
@@ -70,6 +72,7 @@ class ProductRepositoryTest {
         productRepository.updatePaint(product.getName(), product.getShadeNumber(), newVolume);
 
         Optional<Product> updatedProduct = productRepository.findByShadeNumberAndName(product.getShadeNumber(), product.getName());
+
         assertTrue(updatedProduct.isPresent());
         assertEquals(updatedProduct.get().getVolume(), newVolume);
     }
