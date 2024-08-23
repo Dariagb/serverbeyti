@@ -1,5 +1,6 @@
 package ru.daria.serverbeyti;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +13,27 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import javax.sql.DataSource;
+
 @TestConfiguration
 @Testcontainers
 public class TestBeans {
-    @Container
-    static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:15");
+    @Bean(initMethod = "start",destroyMethod = "stop")
+    public PostgreSQLContainer postgreSQLContainer() {
+        return new PostgreSQLContainer<>("postgres:15");
+    }
+    @Bean
+    public DataSource dataSource(PostgreSQLContainer<?> postgreSQLContainer) {
+        var hikariDataSource = new HikariDataSource();
+        hikariDataSource.setJdbcUrl(postgreSQLContainer.getJdbcUrl());
+        hikariDataSource.setUsername(postgreSQLContainer.getUsername());
+        hikariDataSource.setPassword(postgreSQLContainer.getPassword());
+        return hikariDataSource;
+    }
+
 }
+
+
+
+
+

@@ -12,5 +12,4 @@ public class ProductDTO {
     String name;
     Long volume;
     Long shadeNumber;
-
 }

@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-//@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
     @Mock
@@ -48,7 +47,7 @@ class ProductServiceTest {
                 .volume(34l)
                 .build();
 
-        productService.saveProduct();
+        productService.saveProduct(product);
 
         verify(productRepository).save(product);
     }
@@ -57,10 +56,13 @@ class ProductServiceTest {
 //    public void ProductService_getPaintByShadeNumberAndName_Found_Test() {
 //        String name = "Estel";
 //        Long shadeNumber = 123L;
-//        ProductDTO expectedProductDTO = new ProductDTO();
-//        when(productRepository.findByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.of(expectedProductDTO));
+//        Product expectedProduct = new Product();
+//        expectedProduct.setName(name);
+//        expectedProduct.setShadeNumber(shadeNumber);
+//        ProductDTO expectedProductDTO = new ProductDTO(expectedProduct);
+//        when(productRepository.findByShadeNumberAndName(shadeNumber, name)).thenReturn(Optional.of(expectedProduct));
 //
-//        Optional<ProductDTO> actualProductDTO = productService.getPaintByShadeNumberAndName(shadeNumber,name);
+//        Optional<ProductDTO> actualProductDTO = productService.getPaintByShadeNumberAndName(name, shadeNumber);
 //
 //        assertTrue(actualProductDTO.isPresent());
 //        assertEquals(expectedProductDTO, actualProductDTO.get());
@@ -68,11 +70,11 @@ class ProductServiceTest {
 
     @Test
     public void ProductService_GetPaintByShadeNumberAndName_NotFound_Test() {
-        String name = "Blue";
+        String name = "Olin";
         Long shadeNumber = 456L;
         when(productRepository.findByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.empty());
 
-        Optional<ProductDTO> actualProductDTO = productService.getPaintByShadeNumberAndName(shadeNumber,name);
+        Optional<ProductDTO> actualProductDTO = productService.getPaintByShadeNumberAndName(name,shadeNumber);
         assertFalse(actualProductDTO.isPresent());
     }
 
@@ -100,14 +102,14 @@ class ProductServiceTest {
 
     @Test
     public void ProductService_createProductPoint_Test() {
-        ProductDTO productDTO = ProductDTO.builder().name("Estel").volume(34L).shadeNumber(45L).build(); // Создайте тестовый ProductDTO
+        ProductDTO productDTO = ProductDTO.builder().name("Estel").volume(34L).shadeNumber(45L).build();
         Product product = Product.builder()
                 .name("Estel")
                 .volume(34L)
                 .shadeNumber(45L)
                 .build();
         when(productMapper.toProduct(productDTO)).thenReturn(product);
-        when(productRepository.save(Mockito.argThat(arg -> arg.equals(product)))).thenReturn(product); // Проверка конкретного объекта
+        when(productRepository.save(Mockito.argThat(arg -> arg.equals(product)))).thenReturn(product);
 
         Product createdProduct = productService.createProductPoint(productDTO);
 

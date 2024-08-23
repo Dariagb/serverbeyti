@@ -57,12 +57,28 @@ class ProductControllerTest extends AbstractSpringBootTest {
         assertEquals(product, response.getBody());
         verify(productService, times(1)).createProductPoint(dto);
     }
+    @Test
+    public void ProductController_createPaint_BadRequest_NoException_test() {
+
+        ProductDTO dto = new ProductDTO();
+        dto.setName("Olin");
+        dto.setShadeNumber(122L);
+        dto.setVolume(170L);
+
+        when(productService.createProductPoint(dto)).thenReturn(null);
+
+        ResponseEntity<?> response = controller.createPaint(dto);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNull(response.getBody());
+        verify(productService, times(1)).createProductPoint(dto);
+    }
 
     @Test
     public void ProductController_UpdatePaint_test() {
         String name = "Olin";
-        Long shadeNumber = 123L;
-        Long volume = 1000L;
+        Long shadeNumber = 12L;
+        Long volume = 100L;
 
         ResponseEntity<?> response = controller.updatePaint(name, shadeNumber, volume);
 
@@ -70,31 +86,27 @@ class ProductControllerTest extends AbstractSpringBootTest {
         verify(productRepository, times(1)).updatePaint(name, shadeNumber, volume);
     }
 
-//    @Test
-//    public void ProductController_UpdatePaintWithException_test() {
-//        // Arrange
-//        String name = "Olin";
-//        Long shadeNumber = 123L;
-//        Long volume = 1000L;
-//        RuntimeException exception = new RuntimeException("Error ");
-//
-//        when(productRepository.updatePaint(name, shadeNumber, volume)).thenThrow(exception);
-//
-//        // Act
-//        ResponseEntity<?> response = controller.updatePaint(name, shadeNumber, volume);
-//
-//        // Assert
-//        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//        assertEquals(exception.getMessage(), response.getBody());
-//        verify(productRepository, times(1)).updatePaint(name, shadeNumber, volume);
-//    }
+    @Test
+    public void ProductController_UpdatePaintWithException_test() {
+        String name = "Olin";
+        Long shadeNumber = 1L;
+        Long volume = 10L;
+        RuntimeException exception = new RuntimeException("Error");
+        Product updatedProduct = new Product();
+        when(productRepository.updatePaint(name, shadeNumber, volume)).thenThrow(exception); // Мокируйте exception
 
+        ResponseEntity<?> response = controller.updatePaint(name, shadeNumber, volume);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(exception.getMessage(), response.getBody().toString());
+        verify(productRepository, times(1)).updatePaint(name, shadeNumber, volume);
+    }
     @Test
     public void ProductController_UpdateProductPoint_test() {
         Product product = new Product();
         product.setName("Olin");
-        product.setShadeNumber(123L);
-        product.setVolume(1000L);
+        product.setShadeNumber(3L);
+        product.setVolume(10L);
         when(productService.updateProductPaint(product)).thenReturn(product);
 
         ResponseEntity<Product> response = controller.updateProductPoint(product);
@@ -109,8 +121,8 @@ class ProductControllerTest extends AbstractSpringBootTest {
         List<ProductDTO> productDTOs = new ArrayList<>();
         ProductDTO dto1 = new ProductDTO();
         dto1.setName("Olin");
-        dto1.setShadeNumber(123L);
-        dto1.setVolume(1000L);
+        dto1.setShadeNumber(2L);
+        dto1.setVolume(18L);
 
         ProductDTO dto2 = new ProductDTO();
         dto2.setName("Matrix");
@@ -131,19 +143,19 @@ class ProductControllerTest extends AbstractSpringBootTest {
     @Test
     public void ProductController_GetPaint_test() {
         String name = "Olin";
-        Long shadeNumber = 123L;
+        Long shadeNumber = 78L;
         ProductDTO dto = new ProductDTO();
         dto.setName(name);
         dto.setShadeNumber(shadeNumber);
-        dto.setVolume(1000L);
+        dto.setVolume(67L);
 
-        when(productService.getPaintByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.of(dto));
+        when(productService.getPaintByShadeNumberAndName(name,shadeNumber)).thenReturn(Optional.of(dto));
 
-        ResponseEntity<ProductDTO> response = controller.getPaint(shadeNumber,name);
+        ResponseEntity<ProductDTO> response = controller.getPaint(name,shadeNumber);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(dto, response.getBody());
-        verify(productService, times(1)).getPaintByShadeNumberAndName(shadeNumber,name);
+        verify(productService, times(1)).getPaintByShadeNumberAndName(name,shadeNumber);
     }
 
     @Test
@@ -151,13 +163,13 @@ class ProductControllerTest extends AbstractSpringBootTest {
         String name = "Olin";
         Long shadeNumber = 123L;
 
-        when(productService.getPaintByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.empty());
+        when(productService.getPaintByShadeNumberAndName(name,shadeNumber)).thenReturn(Optional.empty());
 
-        ResponseEntity<ProductDTO> response = controller.getPaint(shadeNumber,name);
+        ResponseEntity<ProductDTO> response = controller.getPaint(name,shadeNumber);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
-        verify(productService, times(1)).getPaintByShadeNumberAndName(shadeNumber,name);
+        verify(productService, times(1)).getPaintByShadeNumberAndName(name,shadeNumber);
     }
 
     @Test
@@ -167,6 +179,18 @@ class ProductControllerTest extends AbstractSpringBootTest {
         HttpStatus status = controller.deletePaint(id);
 
         assertEquals(HttpStatus.OK, status);
+        verify(productService, times(1)).deleteProductById(id);
+    }
+    @Test
+    public void ProductController_DeletePaint_NotFound_test() {
+        Long id = 1L;
+        RuntimeException exception = new RuntimeException("Product not found");
+
+        when(productService.deleteProductById(id)).thenThrow(exception);
+
+        HttpStatus status = controller.deletePaint(id);
+
+        assertEquals(HttpStatus.NOT_FOUND, status);
         verify(productService, times(1)).deleteProductById(id);
     }
 }

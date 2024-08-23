@@ -14,13 +14,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public void saveProduct() {
-        Product product = new Product();
+    public void saveProduct(Product product) {
         productRepository.save(product);
     }
 
@@ -40,12 +40,8 @@ public class ProductService {
         }
     }
 
-//    public Optional<ProductDTO> getPaintByShadeNumberAndName(String name, Long shadeNumber) {
-//        return productRepository.getPaintByShadeNumberAndName(name, shadeNumber);
-//    }
-    public Optional<ProductDTO> getPaintByShadeNumberAndName(Long shadeNumber, String name) {
-        return productRepository.findByShadeNumberAndName(shadeNumber, name)
-                .map(productMapper::toProductDTO);
+    public Optional<ProductDTO> getPaintByShadeNumberAndName(String name, Long shadeNumber) {
+        return productRepository.getPaintByShadeNumberAndName(name, shadeNumber);
     }
 
     public Product updateProductPaint(Product product) {
@@ -62,7 +58,8 @@ public class ProductService {
         return productMapper.toProductDTOs(products);
     }
 
-    public void deleteProductById(Long id) {
+    public boolean deleteProductById(Long id) {
         productRepository.deleteById(id);
+        return true;
     }
 }

@@ -21,10 +21,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-
 public class ProductMapperTest extends AbstractSpringBootTest {
 
-   @Autowired
+    @Autowired
     private ProductMapper productMapper;
 
     @Test

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
+
 import ru.daria.serverbeyti.model.Product;
 
 import ru.daria.serverbeyti.service.ProductService;
@@ -40,15 +41,14 @@ public class ProductController {
             @ApiResponse(responseCode = "200", description = "Успешно обновлен"),
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
-    @PutMapping("/id")
-    public ResponseEntity<?> updatePaint(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume) {
-        try {
-            productRepository.updatePaint(name, shadeNumber, volume);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
+  @PutMapping("/id")
+   public ResponseEntity<?> updatePaint(@RequestParam String name, @RequestParam Long shadeNumber, @RequestParam Long volume) {
+       try {
+           productRepository.updatePaint(name, shadeNumber, volume);
+           return new ResponseEntity<>(HttpStatus.OK);
+       } catch (RuntimeException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }}
 
     @Operation(summary = "Обновить наличие краски по всем параметрам")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "\n" + "Успешно обновлен"),
@@ -72,8 +72,8 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping("/{name}/{shadeNumber}")
-    public ResponseEntity<ProductDTO> getPaint(@PathVariable Long shadeNumber,@PathVariable String name) {
-        Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(shadeNumber,name);
+    public ResponseEntity<ProductDTO> getPaint(@PathVariable String name, @PathVariable Long shadeNumber) {
+        Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(name, shadeNumber);
 
         return paint.map(p -> ResponseEntity.status(HttpStatus.OK).body(p))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -89,4 +89,3 @@ public class ProductController {
         return HttpStatus.OK;
     }
 }
-

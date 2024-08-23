@@ -1,13 +1,10 @@
 package ru.daria.serverbeyti;
+import org.springframework.boot.SpringApplication;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
 class ServerbeytiApplicationTests {
-
-    @Test
-    void contextLoads() {
+    public static void main(String[] args){
+        SpringApplication.from( ServerbeytiApplication::main)
+                .with(TestBeans.class)
+                .run(args);
     }
-
 }

@@ -17,15 +17,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
-@ExtendWith(SpringExtension.class)
-@Transactional
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-
 class ProductRepositoryTest extends AbstractSpringBootTest {
-//    @Autowired
-//    private ProductRepository productRepository;
-//    private ProductMapper productMapper;
 
     @Test
     void ProductRepository_findByShadeNumberAndName_test() {
@@ -45,40 +37,40 @@ class ProductRepositoryTest extends AbstractSpringBootTest {
         when(productRepository.findByShadeNumberAndName(product.getShadeNumber(), product.getName()))
                 .thenReturn(Optional.of(product));
 
-        // Act
+
         Optional<Product> product1 = productRepository.findByShadeNumberAndName(product.getShadeNumber(), product.getName());
 
-        // Assert
+
         assertTrue(product1.isPresent());
         assertEquals(product1.get().getName(), product.getName());
         assertEquals(product1.get().getShadeNumber(), product.getShadeNumber());
         assertEquals(product1.get().getVolume(), product.getVolume());
     }
 
-//    @Test
-//    void ProductRepository_getPaintByShadeNumberAndName_test() {
-//        Product product2 = Product.builder()
-//                .name("Kapous")
-//                .shadeNumber(42L)
-//                .volume(37l)
-//                .build();
-//        productRepository.save(product2);
-//
-//        Optional<ProductDTO> productDTO = productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber());
-//
-//        assertTrue(productDTO.isPresent(), "Product not found");
-//        ProductDTO dto = productDTO.get();
-//        assertEquals(product2.getName(), dto.getName(), "Name mismatch");
-//        assertEquals(product2.getShadeNumber(), dto.getShadeNumber(), "Shade number mismatch");
-//        assertEquals(product2.getVolume(), dto.getVolume(), "Volume mismatch");
-//    }
+    @Test
+    void ProductRepository_getPaintByShadeNumberAndName_test() {
+        Product product2 = Product.builder()
+                .name("Kapous")
+                .shadeNumber(4L)
+                .volume(38l)
+                .build();
+        productRepository.save(product2);
+
+        Optional<ProductDTO> productDTO = productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber());
+
+        assertTrue(productDTO.isPresent(), "Товар не найден");
+        ProductDTO dto = productDTO.get();
+        assertEquals(product2.getName(), dto.getName(), "Названия не соответствуют");
+        assertEquals(product2.getShadeNumber(), dto.getShadeNumber(), "Номер оттенка не соответствует");
+        assertEquals(product2.getVolume(), dto.getVolume(), "Объем не соответствует");
+    }
 
     @Test
     void ProductRepository_updatePaint_test() {
         Product product = Product.builder()
                 .name("Estel")
-                .shadeNumber(45L)
-                .volume(34L)
+                .shadeNumber(5L)
+                .volume(38L)
                 .build();
         productRepository.save(product);
 
