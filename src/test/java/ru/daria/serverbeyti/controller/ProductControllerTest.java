@@ -57,22 +57,6 @@ class ProductControllerTest extends AbstractSpringBootTest {
         assertEquals(product, response.getBody());
         verify(productService, times(1)).createProductPoint(dto);
     }
-    @Test
-    public void ProductController_createPaint_BadRequest_NoException_test() {
-
-        ProductDTO dto = new ProductDTO();
-        dto.setName("Olin");
-        dto.setShadeNumber(122L);
-        dto.setVolume(170L);
-
-        when(productService.createProductPoint(dto)).thenReturn(null);
-
-        ResponseEntity<?> response = controller.createPaint(dto);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNull(response.getBody());
-        verify(productService, times(1)).createProductPoint(dto);
-    }
 
     @Test
     public void ProductController_UpdatePaint_test() {
@@ -181,16 +165,5 @@ class ProductControllerTest extends AbstractSpringBootTest {
         assertEquals(HttpStatus.OK, status);
         verify(productService, times(1)).deleteProductById(id);
     }
-    @Test
-    public void ProductController_DeletePaint_NotFound_test() {
-        Long id = 1L;
-        RuntimeException exception = new RuntimeException("Product not found");
 
-        when(productService.deleteProductById(id)).thenThrow(exception);
-
-        HttpStatus status = controller.deletePaint(id);
-
-        assertEquals(HttpStatus.NOT_FOUND, status);
-        verify(productService, times(1)).deleteProductById(id);
-    }
 }

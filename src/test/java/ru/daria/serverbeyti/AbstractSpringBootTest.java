@@ -10,13 +10,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.service.ProductService;
 
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest(classes = TestBeans.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public abstract class AbstractSpringBootTest {
-
-    @PersistenceContext
-    protected EntityManager entityManager;
 
     @MockBean
     protected ProductService productService;

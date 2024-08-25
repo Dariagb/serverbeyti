@@ -58,8 +58,7 @@ public class ProductService {
         return productMapper.toProductDTOs(products);
     }
 
-    public boolean deleteProductById(Long id) {
+    public void deleteProductById(Long id) {
         productRepository.deleteById(id);
-        return true;
     }
 }

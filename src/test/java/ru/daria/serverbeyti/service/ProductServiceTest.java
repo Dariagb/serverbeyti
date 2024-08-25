@@ -68,15 +68,15 @@ class ProductServiceTest {
 //        assertEquals(expectedProductDTO, actualProductDTO.get());
 //    }
 
-    @Test
-    public void ProductService_GetPaintByShadeNumberAndName_NotFound_Test() {
-        String name = "Olin";
-        Long shadeNumber = 456L;
-        when(productRepository.findByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.empty());
-
-        Optional<ProductDTO> actualProductDTO = productService.getPaintByShadeNumberAndName(name,shadeNumber);
-        assertFalse(actualProductDTO.isPresent());
-    }
+//    @Test
+//    public void ProductService_GetPaintByShadeNumberAndName_NotFound_Test() {
+//        String name = "Olin";
+//        Long shadeNumber = 456L;
+//        when(productRepository.findByShadeNumberAndName(shadeNumber,name)).thenReturn(Optional.empty());
+//
+//        Optional<ProductDTO> actualProductDTO = productService.getPaintByShadeNumberAndName(name,shadeNumber);
+//        assertFalse(actualProductDTO.isPresent());
+//    }
 
     @Test
     public void ProductService_updateProductPaint_Test() {

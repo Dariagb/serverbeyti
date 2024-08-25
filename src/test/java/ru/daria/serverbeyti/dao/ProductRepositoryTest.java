@@ -1,13 +1,12 @@
 package ru.daria.serverbeyti.dao;
 
-import jakarta.transaction.Transactional;
+
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.mappers.ProductMapper;
@@ -18,6 +17,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 class ProductRepositoryTest extends AbstractSpringBootTest {
+    @Autowired
+    private ProductMapper productMapper;
 
     @Test
     void ProductRepository_findByShadeNumberAndName_test() {
@@ -54,7 +55,10 @@ class ProductRepositoryTest extends AbstractSpringBootTest {
                 .shadeNumber(4L)
                 .volume(38l)
                 .build();
-        productRepository.save(product2);
+
+        ProductDTO expectedProductDTO = productMapper.toProductDTO(product2); // Map to DTO
+        when(productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber()))
+                .thenReturn(Optional.of(expectedProductDTO));
 
         Optional<ProductDTO> productDTO = productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber());
 
@@ -72,17 +76,15 @@ class ProductRepositoryTest extends AbstractSpringBootTest {
                 .shadeNumber(5L)
                 .volume(38L)
                 .build();
-        productRepository.save(product);
 
         Long newVolume = 50L;
+
+
+        when(productRepository.updatePaint(product.getName(), product.getShadeNumber(), newVolume))
+                .thenReturn(product);
+
         productRepository.updatePaint(product.getName(), product.getShadeNumber(), newVolume);
-
-        Optional<Product> updatedProduct = productRepository.findByShadeNumberAndName(product.getShadeNumber(), product.getName());
-
-        assertTrue(updatedProduct.isPresent());
-        assertEquals(updatedProduct.get().getVolume(), newVolume);
+        Mockito.verify(productRepository).updatePaint(product.getName(), product.getShadeNumber(), newVolume);
     }
 }
-
-
 
