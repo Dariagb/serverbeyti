@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.model.Product;
 
@@ -13,8 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-public class ProductMapperTest {
+public class ProductMapperTest extends AbstractSpringBootTest {
 
     @Autowired
     private ProductMapper productMapper;
@@ -24,8 +24,8 @@ public class ProductMapperTest {
         Product product = new Product();
         product.setId(1L);
         product.setName("Olin");
-        product.setShadeNumber(45l);
-        product.setVolume(67l);
+        product.setShadeNumber(45L);
+        product.setVolume(67L);
 
         ProductDTO productDTO = productMapper.toProductDTO(product);
 

@@ -1,17 +1,21 @@
 package ru.daria.serverbeyti.dao;
 
 import org.junit.jupiter.api.Test;
+
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.mappers.ProductMapper;
 import ru.daria.serverbeyti.model.Product;
-import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-class ProductRepositoryTest extends AbstractSpringBootTest {
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class ProductRepositoryTest extends AbstractSpringBootTest {
     @Autowired
     private ProductMapper productMapper;
 
@@ -33,7 +37,9 @@ class ProductRepositoryTest extends AbstractSpringBootTest {
         when(productRepository.findByShadeNumberAndName(product.getShadeNumber(), product.getName()))
                 .thenReturn(Optional.of(product));
 
+
         Optional<Product> product1 = productRepository.findByShadeNumberAndName(product.getShadeNumber(), product.getName());
+
 
         assertTrue(product1.isPresent());
         assertEquals(product1.get().getName(), product.getName());
@@ -72,11 +78,10 @@ class ProductRepositoryTest extends AbstractSpringBootTest {
 
         Long newVolume = 50L;
 
-        when(productRepository.updatePaint(product.getName(), product.getShadeNumber(), newVolume))
-                .thenReturn(product);
+        doNothing().when(productRepository).updatePaint(product.getName(), product.getShadeNumber(), newVolume);
 
         productRepository.updatePaint(product.getName(), product.getShadeNumber(), newVolume);
-        Mockito.verify(productRepository).updatePaint(product.getName(), product.getShadeNumber(), newVolume);
+
+        verify(productRepository).updatePaint(product.getName(), product.getShadeNumber(), newVolume);
     }
 }
-
