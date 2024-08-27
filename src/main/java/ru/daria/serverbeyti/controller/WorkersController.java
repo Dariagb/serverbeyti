@@ -1,4 +1,5 @@
 package ru.daria.serverbeyti.controller;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,7 +11,6 @@ import ru.daria.serverbeyti.dao.WorkersRepository;
 import ru.daria.serverbeyti.model.Workers;
 import ru.daria.serverbeyti.service.WorkersService;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +21,13 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("/workers")
 @Tag(name = "workers api", description = "управление работой мастеров.")
 public class WorkersController {
+
     private final WorkersService workersServise;
     private final WorkersRepository workersRepository;
 
-    @Operation(summary = "Создать нового работника, содержащий параметры имени,фамилии и должности.")
+    @Operation(summary = "Создает работника")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно создан"),
-            @ApiResponse(responseCode = "404", description = "Товар не создан")
+            @ApiResponse(responseCode = "404", description = "не найден")
     })
     @PostMapping
     public ResponseEntity<Workers> createWorker(@RequestBody Workers workers) {

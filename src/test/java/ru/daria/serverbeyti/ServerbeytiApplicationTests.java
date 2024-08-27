@@ -1,8 +1,5 @@
 package ru.daria.serverbeyti;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.boot.SpringApplication;
 
 class ServerbeytiApplicationTests {

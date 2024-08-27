@@ -24,36 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.http.HttpStatus;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.daria.serverbeyti.AbstractSpringBootTest;
-import ru.daria.serverbeyti.TestBeans;
-import ru.daria.serverbeyti.dao.ProductRepository;
-import ru.daria.serverbeyti.dto.ProductDTO;
-import ru.daria.serverbeyti.model.Product;
-import ru.daria.serverbeyti.service.ProductService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.*;
 
 class ProductControllerTest extends AbstractSpringBootTest {
 

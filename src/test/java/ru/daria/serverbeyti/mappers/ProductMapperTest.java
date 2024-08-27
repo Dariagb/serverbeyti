@@ -3,7 +3,6 @@ package ru.daria.serverbeyti.mappers;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.dto.ProductDTO;
@@ -51,7 +50,6 @@ public class ProductMapperTest extends AbstractSpringBootTest {
         List<Product> products = Arrays.asList(product1, product2);
 
         List<ProductDTO> productDTOs = productMapper.toProductDTOs(products);
-
 
         assertEquals(2, productDTOs.size());
         assertEquals(product1.getName(), productDTOs.get(0).getName());

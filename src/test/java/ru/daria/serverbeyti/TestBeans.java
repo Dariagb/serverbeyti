@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-
 @TestConfiguration
 @Testcontainers
 public class TestBeans {
