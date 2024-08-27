@@ -16,14 +16,19 @@ public class Workers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column
     private String name;
+
     @Column
     private String surname;
+
     @Column
     private String post;
+
     @Column
     private Integer age;
+
     @Column
     private String phone;
 }

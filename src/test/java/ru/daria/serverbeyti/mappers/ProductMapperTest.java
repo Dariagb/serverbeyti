@@ -52,7 +52,6 @@ public class ProductMapperTest extends AbstractSpringBootTest {
 
         List<ProductDTO> productDTOs = productMapper.toProductDTOs(products);
 
-
         assertEquals(2, productDTOs.size());
         assertEquals(product1.getName(), productDTOs.get(0).getName());
         assertEquals(product1.getShadeNumber(), productDTOs.get(0).getShadeNumber());

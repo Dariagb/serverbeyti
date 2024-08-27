@@ -19,10 +19,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-//    public void saveProduct() {
-//        Product product = new Product();
-//        productRepository.save(product);
-//    }
     public void saveProduct(Product product) { // Добавлено product в аргументы
         productRepository.save(product);
     }

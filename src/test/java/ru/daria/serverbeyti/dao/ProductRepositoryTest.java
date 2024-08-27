@@ -2,7 +2,6 @@ package ru.daria.serverbeyti.dao;
 
 import org.junit.jupiter.api.Test;
 
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.daria.serverbeyti.AbstractSpringBootTest;
@@ -16,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ProductRepositoryTest extends AbstractSpringBootTest {
+
     @Autowired
     private ProductMapper productMapper;
 
