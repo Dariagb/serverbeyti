@@ -26,7 +26,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductRepository productRepository;
-    private final OxideClient oxideService;
+//    private final OxideClient oxideService;
 
 
     @Operation(summary = "Создать новый продукт, содержащий параметры имени,номера оттенка и объема.")
