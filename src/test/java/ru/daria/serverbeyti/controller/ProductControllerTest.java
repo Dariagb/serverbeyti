@@ -3,18 +3,11 @@ package ru.daria.serverbeyti.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-
-import ru.daria.serverbeyti.dao.ProductRepository;
+import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.model.Product;
-import ru.daria.serverbeyti.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +16,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
-
-import ru.daria.serverbeyti.AbstractSpringBootTest;
 
 class ProductControllerTest extends AbstractSpringBootTest {
 
