@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
-import ru.daria.serverbeyti.feinKlient.OxideClient;
 import ru.daria.serverbeyti.model.Product;
-
 import ru.daria.serverbeyti.service.ProductService;
 
 import java.util.List;
@@ -26,8 +24,6 @@ public class ProductController {
 
     private final ProductService productService;
     private final ProductRepository productRepository;
-//    private final OxideClient oxideService;
-
 
     @Operation(summary = "Создать новый продукт, содержащий параметры имени,номера оттенка и объема.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно создан"),
@@ -74,26 +70,12 @@ public class ProductController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
-    @GetMapping("/{name}/{shadeNumber}")
-    public ResponseEntity<ProductDTO> getPaint(@PathVariable String name, @PathVariable Long shadeNumber) {
-        Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(name, shadeNumber);
-
+    @GetMapping("/{shadeNumber}/{name}")
+    public ResponseEntity<Product> getPaint(@PathVariable Long shadeNumber, @PathVariable String name) {
+        Optional<Product> paint = productService.getPaintByShadeNumberAndName(shadeNumber, name);
         return paint.map(p -> ResponseEntity.status(HttpStatus.OK).body(p))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-//    @GetMapping("/{name}/{shadeNumber}")
-//    public ResponseEntity<ProductDTO> getPaint(@PathVariable String name, @PathVariable Long shadeNumber) {
-//        Optional<ProductDTO> paint = productService.getPaintByShadeNumberAndName(name, shadeNumber);
-//
-//        if (paint.isPresent()) {
-//            ProductDTO productDTO = paint.get();
-//            Long oxideVolume = Long.valueOf(oxideService.calculateOxideForPaint(productDTO.getVolume()));
-//            productDTO.setOxideAmount(oxideVolume);
-//            return ResponseEntity.ok(productDTO);
-//        }
-//
-//        return ResponseEntity.notFound().build();
-//    }
 
     @Operation(summary = "Удалить продукт", description = "Удаляем продукт по id")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно удален"),

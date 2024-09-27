@@ -1,6 +1,5 @@
 package ru.daria.serverbeyti.dto;
 
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,5 +13,4 @@ public class ProductDTO {
     Long volume;
     Long shadeNumber;
     Long oxideAmount;
-
 }

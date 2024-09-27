@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
+import ru.daria.serverbeyti.AbstractSpringBootTest;
 
 import java.util.Properties;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class KafkaConfigurationTest extends AbstractKafkaTest {
+class KafkaConfigurationTest extends AbstractSpringBootTest {
 
     @Autowired
     private ApplicationContext applicationContext;

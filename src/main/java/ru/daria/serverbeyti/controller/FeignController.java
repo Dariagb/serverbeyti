@@ -1,19 +1,18 @@
-package ru.daria.serverbeyti.feinKlient;
+package ru.daria.serverbeyti.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import ru.daria.serverbeyti.feinKlient.OxideClient;
 
 @RestController
-public class OxideService {
+@RequiredArgsConstructor
+public class FeignController {
 
-    private final OxideClient oxideClient;
+   private final OxideClient oxideClient;
 
-    public OxideService(OxideClient oxideClient) {
-        this.oxideClient = oxideClient;
-    }
-
-    @GetMapping("/demo/{volume}")
+   @GetMapping("/demo/{volume}")
     public Long getOrderWithProduct(@PathVariable Long volume) {
         Long product = oxideClient.calculateOxideForPaint(volume);
         return product;

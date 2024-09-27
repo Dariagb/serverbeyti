@@ -4,10 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.core.KafkaTemplate;
+import ru.daria.serverbeyti.AbstractSpringBootTest;
 
 import static org.mockito.Mockito.verify;
 
-class ProducerTest extends AbstractKafkaTest {
+class ProducerTest extends AbstractSpringBootTest {
 
     @Autowired
     private Producer producer;

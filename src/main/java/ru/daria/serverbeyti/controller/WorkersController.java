@@ -1,4 +1,5 @@
 package ru.daria.serverbeyti.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -23,7 +24,6 @@ import static org.springframework.http.ResponseEntity.status;
 public class WorkersController {
 
     private final WorkersService workersServise;
-    private final WorkersRepository workersRepository;
 
     @Operation(summary = "Создает работника")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно создан"),

@@ -1,4 +1,4 @@
-package ru.daria.serverbeyti.kafka;
+package ru.daria.serverbeyti.configuration;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

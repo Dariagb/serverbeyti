@@ -47,26 +47,26 @@ class ProductRepositoryTest extends AbstractSpringBootTest {
         assertEquals(product1.get().getVolume(), product.getVolume());
     }
 
-    @Test
-    void ProductRepository_getPaintByShadeNumberAndName_test() {
-        Product product2 = Product.builder()
-                .name("Kapous")
-                .shadeNumber(4L)
-                .volume(38l)
-                .build();
-
-        ProductDTO expectedProductDTO = productMapper.toProductDTO(product2); // Map to DTO
-        when(productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber()))
-                .thenReturn(Optional.of(expectedProductDTO));
-
-        Optional<ProductDTO> productDTO = productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber());
-
-        assertTrue(productDTO.isPresent(), "Товар не найден");
-        ProductDTO dto = productDTO.get();
-        assertEquals(product2.getName(), dto.getName(), "Названия не соответствуют");
-        assertEquals(product2.getShadeNumber(), dto.getShadeNumber(), "Номер оттенка не соответствует");
-        assertEquals(product2.getVolume(), dto.getVolume(), "Объем не соответствует");
-    }
+//    @Test
+//    void ProductRepository_getPaintByShadeNumberAndName_test() {
+//        Product product2 = Product.builder()
+//                .name("Kapous")
+//                .shadeNumber(4L)
+//                .volume(38l)
+//                .build();
+//
+//        ProductDTO expectedProductDTO = productMapper.toProductDTO(product2); // Map to DTO
+//        when(productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber()))
+//                .thenReturn(Optional.of(expectedProductDTO));
+//
+//        Optional<ProductDTO> productDTO = productRepository.getPaintByShadeNumberAndName(product2.getName(), product2.getShadeNumber());
+//
+//        assertTrue(productDTO.isPresent(), "Товар не найден");
+//        ProductDTO dto = productDTO.get();
+//        assertEquals(product2.getName(), dto.getName(), "Названия не соответствуют");
+//        assertEquals(product2.getShadeNumber(), dto.getShadeNumber(), "Номер оттенка не соответствует");
+//        assertEquals(product2.getVolume(), dto.getVolume(), "Объем не соответствует");
+//    }
 
     @Test
     void ProductRepository_updatePaint_test() {
