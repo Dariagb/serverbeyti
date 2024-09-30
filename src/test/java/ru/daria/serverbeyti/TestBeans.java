@@ -8,6 +8,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @TestConfiguration
 @Testcontainers
 public class TestBeans {
+
     @Bean(initMethod = "start",destroyMethod = "stop")
     public PostgreSQLContainer postgreSQLContainer() {
         return new PostgreSQLContainer<>("postgres:15");

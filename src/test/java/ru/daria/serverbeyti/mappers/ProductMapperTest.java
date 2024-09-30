@@ -19,7 +19,7 @@ public class ProductMapperTest extends AbstractSpringBootTest {
     private ProductMapper productMapper;
 
     @Test
-    public void testToProductDTO() {
+    void testToProductDTO() {
         Product product = new Product();
         product.setId(1L);
         product.setName("Olin");
@@ -34,7 +34,7 @@ public class ProductMapperTest extends AbstractSpringBootTest {
     }
 
     @Test
-    public void testToProductDTOs() {
+    void testToProductDTOs() {
         Product product1 = new Product();
         product1.setId(1L);
         product1.setName("Olin");
@@ -61,7 +61,7 @@ public class ProductMapperTest extends AbstractSpringBootTest {
     }
 
     @Test
-    public void testToProduct() {
+    void testToProduct() {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setName("Olin");
         productDTO.setShadeNumber(45l);

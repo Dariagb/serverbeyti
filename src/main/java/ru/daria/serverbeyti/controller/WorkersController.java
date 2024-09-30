@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.daria.serverbeyti.dao.WorkersRepository;
 import ru.daria.serverbeyti.model.Workers;
 import ru.daria.serverbeyti.service.WorkersService;
 
