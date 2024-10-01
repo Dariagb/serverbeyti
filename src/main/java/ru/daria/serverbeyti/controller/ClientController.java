@@ -9,7 +9,7 @@ import ru.daria.serverbeyti.model.Client;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("client")
 @RequiredArgsConstructor
 public class ClientController {
 

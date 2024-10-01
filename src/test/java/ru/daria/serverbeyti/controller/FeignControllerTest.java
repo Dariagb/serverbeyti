@@ -28,6 +28,7 @@ class FeignControllerTest extends AbstractSpringBootTest {
 
     @BeforeEach
     void setUp() {
+
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
