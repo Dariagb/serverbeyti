@@ -18,7 +18,6 @@ public class TestBeans {
         return new PostgreSQLContainer<>("postgres:15");
     }
 
-    @Container
     public static final KafkaContainer kafkaContainer = new KafkaContainer("5.2.1")
             .withExposedPorts(9093);
 
@@ -31,6 +30,3 @@ public class TestBeans {
         kafkaContainer.start();
     }
 }
-
-
-
