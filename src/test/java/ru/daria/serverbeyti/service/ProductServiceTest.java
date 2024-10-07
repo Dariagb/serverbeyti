@@ -10,8 +10,10 @@ import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
 import ru.daria.serverbeyti.mappers.ProductMapper;
 import ru.daria.serverbeyti.model.Product;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,7 +35,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void ProductService_saveProduct_Test() {
+    void productService_saveProduct_Test() {
         Product product = Product.builder()
                 .name("Estel")
                 .shadeNumber(45L)
@@ -45,24 +47,8 @@ class ProductServiceTest {
         verify(productRepository).save(product);
     }
 
-//    @Test
-//    public void ProductService_getPaintByShadeNumberAndName_Found_Test() {
-//        String name = "Estel";
-//        Long shadeNumber = 123L;
-//        Product expectedProduct = new Product();
-//        expectedProduct.setName(name);
-//        expectedProduct.setShadeNumber(shadeNumber);
-//        ProductDTO expectedProductDTO = new ProductDTO(expectedProduct);
-//        when(productRepository.findByShadeNumberAndName(shadeNumber, name)).thenReturn(Optional.of(expectedProduct));
-//
-//        Optional<ProductDTO> actualProductDTO = productService.getPaintByShadeNumberAndName(name, shadeNumber);
-//
-//        assertTrue(actualProductDTO.isPresent());
-//        assertEquals(expectedProductDTO, actualProductDTO.get());
-//    }
-
     @Test
-    public void ProductService_updateProductPaint_Test() {
+    void productService_updateProductPaint_Test() {
         Product productToUpdate = Product.builder()
                 .name("Estel")
                 .shadeNumber(49L)
@@ -84,7 +70,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void ProductService_createProductPoint_Test() {
+    void productService_createProductPoint_Test() {
         ProductDTO productDTO = ProductDTO.builder().name("Estel").volume(34L).shadeNumber(45L).build();
         Product product = Product.builder()
                 .name("Estel")
@@ -102,7 +88,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void ProductService_readAllProductDTO_Test() {
+    void productService_readAllProductDTO_Test() {
 
         List<Product> products = new ArrayList<>();
         products.add(Product.builder().name("Kapous").volume(87L).shadeNumber(4L).build());
@@ -123,7 +109,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void ProductService_deleteProductById_Test() {
+    void productService_deleteProductById_Test() {
         Long productId = 1L;
         productService.deleteProductById(productId);
         verify(productRepository).deleteById(productId);

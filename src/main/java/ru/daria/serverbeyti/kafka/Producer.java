@@ -1,9 +1,9 @@
 package ru.daria.serverbeyti.kafka;
 
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class Producer {
     private final KafkaTemplate<String, String> kafkaTemplate;
 

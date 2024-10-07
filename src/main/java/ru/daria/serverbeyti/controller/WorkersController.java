@@ -1,4 +1,5 @@
 package ru.daria.serverbeyti.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -7,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.daria.serverbeyti.dao.WorkersRepository;
 import ru.daria.serverbeyti.model.Workers;
 import ru.daria.serverbeyti.service.WorkersService;
 
@@ -23,7 +23,6 @@ import static org.springframework.http.ResponseEntity.status;
 public class WorkersController {
 
     private final WorkersService workersServise;
-    private final WorkersRepository workersRepository;
 
     @Operation(summary = "Создает работника")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно создан"),

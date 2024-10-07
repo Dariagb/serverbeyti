@@ -1,10 +1,7 @@
 package ru.daria.serverbeyti.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
@@ -31,4 +28,6 @@ public class Product {
 
     @Column(name = "price")
     private Long price;
+
+
 }

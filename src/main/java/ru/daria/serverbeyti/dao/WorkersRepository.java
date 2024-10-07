@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface WorkersRepository extends JpaRepository<Workers, Long> {
     Optional<Workers> findBySurname(String surname);
-    Optional<Workers> findByPost(String post);
+
     List<Workers> findAllByPost(String post);
 }

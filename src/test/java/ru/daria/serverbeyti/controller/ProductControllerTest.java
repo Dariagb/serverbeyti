@@ -1,6 +1,5 @@
 package ru.daria.serverbeyti.controller;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ class ProductControllerTest extends AbstractSpringBootTest {
     private ProductController controller;
 
     @Test
-    public void ProductController_сreatePaint_test() {
+    void productController_сreatePaint_test() {
 
         ProductDTO dto = new ProductDTO();
         dto.setName("Olin");
@@ -45,7 +44,7 @@ class ProductControllerTest extends AbstractSpringBootTest {
     }
 
     @Test
-    public void ProductController_UpdatePaint_test() {
+    void productController_updatePaint_test() {
         String name = "Olin";
         Long shadeNumber = 12L;
         Long volume = 100L;
@@ -57,7 +56,7 @@ class ProductControllerTest extends AbstractSpringBootTest {
     }
 
     @Test
-    public void ProductController_UpdateProductPoint_test() {
+    void productController_updateProductPoint_test() {
         Product product = new Product();
         product.setName("Olin");
         product.setShadeNumber(3L);
@@ -72,7 +71,7 @@ class ProductControllerTest extends AbstractSpringBootTest {
     }
 
     @Test
-    public void ProductController_ReadAllPaint_test() {
+    void productController_readAllPaint_test() {
         List<ProductDTO> productDTOs = new ArrayList<>();
         ProductDTO dto1 = new ProductDTO();
         dto1.setName("Olin");
@@ -96,39 +95,47 @@ class ProductControllerTest extends AbstractSpringBootTest {
     }
 
     @Test
-    public void ProductController_GetPaint_test() {
+    void productController_getPaint_test() {
         String name = "Olin";
         Long shadeNumber = 78L;
+
+
         ProductDTO dto = new ProductDTO();
         dto.setName(name);
         dto.setShadeNumber(shadeNumber);
         dto.setVolume(67L);
 
-        when(productService.getPaintByShadeNumberAndName(name,shadeNumber)).thenReturn(Optional.of(dto));
 
-        ResponseEntity<ProductDTO> response = controller.getPaint(name,shadeNumber);
+        Product product = new Product();
+        product.setName(name);
+        product.setShadeNumber(shadeNumber);
+        product.setVolume(67L);
+
+        when(productService.getPaintByShadeNumberAndName(shadeNumber, name)).thenReturn(Optional.of(product));
+
+        ResponseEntity<Product> response = controller.getPaint(shadeNumber, name);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(dto, response.getBody());
-        verify(productService, times(1)).getPaintByShadeNumberAndName(name,shadeNumber);
+
+        verify(productService, times(1)).getPaintByShadeNumberAndName(shadeNumber, name);
     }
 
     @Test
-    public void ProductController_GetPaintNotFound_test() {
+    void productController_getPaintNotFound_test() {
         String name = "Olin";
         Long shadeNumber = 123L;
 
-        when(productService.getPaintByShadeNumberAndName(name,shadeNumber)).thenReturn(Optional.empty());
+        when(productService.getPaintByShadeNumberAndName(shadeNumber, name)).thenReturn(Optional.empty());
 
-        ResponseEntity<ProductDTO> response = controller.getPaint(name,shadeNumber);
+        ResponseEntity<Product> response = controller.getPaint(shadeNumber, name);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
-        verify(productService, times(1)).getPaintByShadeNumberAndName(name,shadeNumber);
+        verify(productService, times(1)).getPaintByShadeNumberAndName(shadeNumber, name);
     }
 
     @Test
-    public void ProductController_DeletePaint_test() {
+    void productController_deletePaint_test() {
         Long id = 1L;
 
         HttpStatus status = controller.deletePaint(id);
