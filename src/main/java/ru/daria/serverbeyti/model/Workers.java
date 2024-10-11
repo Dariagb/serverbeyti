@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "workers")
@@ -17,18 +19,25 @@ public class Workers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "surname")
     private String surname;
 
-    @Column
+    @Column(name = "post")
     private String post;
 
-    @Column
+    @Column(name = "age")
     private Integer age;
 
-    @Column
+    @Column(name = "phone")
     private String phone;
+
+    @ManyToMany
+    @JoinTable(
+            name = "client_workers",
+            joinColumns = @JoinColumn(name = "worker_id"),
+            inverseJoinColumns = @JoinColumn(name = "client_id"))
+    private List<Client> clients;
 }

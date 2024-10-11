@@ -5,4 +5,7 @@
     <include file="vers1-create-product-table-changelog.xml" relativeToChangelogFile="true"/>
     <include file="create-worker-table.xml" relativeToChangelogFile="true"/>
     <include file="create-client-table.xml" relativeToChangelogFile="true"/>
+    <include file="create-manufacturer-table.xml" relativeToChangelogFile="true"/>
+    <include file="add_product_table.xml" relativeToChangelogFile="true"/>
+    <include file="client_workers.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

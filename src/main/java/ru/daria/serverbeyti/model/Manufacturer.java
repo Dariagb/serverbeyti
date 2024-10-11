@@ -3,27 +3,31 @@ package ru.daria.serverbeyti.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
-@Table(name = "client")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Client {
+@Table(name = "manufacturer")
+public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long manufacturerId;
 
-    @Column
+    @Column(name = "name")
     String name;
 
-    @Column
-    String phone;
+    @Column(name="adress")
+    String adress;
 
-    @ManyToMany(mappedBy = "clients")
-    private List<Workers> workersList;
+    @Column(name="phone")
+    String phoneNumber;
 
+    @OneToMany(mappedBy ="manufacturer")
+    private List<Product> products;
 }
