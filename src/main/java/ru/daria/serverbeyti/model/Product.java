@@ -29,5 +29,7 @@ public class Product {
     @Column(name = "price")
     private Long price;
 
-
+    @ManyToOne
+    @JoinColumn(name = "manufacturerId")
+    private Manufacturer manufacturer;
 }
