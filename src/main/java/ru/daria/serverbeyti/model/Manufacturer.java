@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "manufacturer")
 public class Manufacturer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long manufacturerId;
 
     @Column(name = "name")
@@ -28,6 +28,7 @@ public class Manufacturer {
     @Column(name="phone")
     String phoneNumber;
 
-    @OneToMany(mappedBy ="manufacturer")
+    @OneToMany(targetEntity = Product.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "mp",referencedColumnName = "manufacturerId")
     private List<Product> products;
 }

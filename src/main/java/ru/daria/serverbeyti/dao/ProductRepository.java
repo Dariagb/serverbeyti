@@ -18,5 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("UPDATE Product p SET p.volume = :volume WHERE p.name = :name AND p.shadeNumber = :shadeNumber")
     @Transactional
     void updatePaint(@Param("name") String name, @Param("shadeNumber") Long shadeNumber, @Param("volume") Long volume);
+
 }
 
