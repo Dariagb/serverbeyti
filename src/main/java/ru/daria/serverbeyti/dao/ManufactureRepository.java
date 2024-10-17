@@ -7,8 +7,8 @@ import ru.daria.serverbeyti.model.Manufacturer;
 
 import java.util.List;
 
-public interface ManufactureRepository extends JpaRepository<Manufacturer,Long> {
+public interface ManufactureRepository extends JpaRepository<Manufacturer, Long> {
     @Query(value = "SELECT new ru.daria.serverbeyti.dto.OrderResponse(p.name, m.name) " +
-            "FROM Manufacturer m JOIN m.products p" )
-    public List<OrderResponse> getJoinInformation();
+            "FROM Manufacturer m JOIN m.products p")
+    List<OrderResponse> getJoinInformation();
 }
