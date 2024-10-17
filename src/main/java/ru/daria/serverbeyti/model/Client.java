@@ -23,7 +23,7 @@ public class Client {
     @Column
     String phone;
 
-    @ManyToMany(mappedBy = "clients")
+    @ManyToMany(mappedBy = "clients", fetch = FetchType.LAZY)
     private List<Workers> workersList;
 
 }
