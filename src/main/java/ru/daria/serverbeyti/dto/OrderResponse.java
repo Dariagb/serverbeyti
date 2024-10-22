@@ -10,6 +10,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class OrderResponse {
-    private String name;
     private String productName;
+    private String manufacturerName;
+
 }
+
+
+
+

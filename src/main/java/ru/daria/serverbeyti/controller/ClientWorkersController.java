@@ -9,29 +9,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.daria.serverbeyti.dao.ClientsRepository;
-import ru.daria.serverbeyti.dao.WorkersRepository;
-import ru.daria.serverbeyti.exeption.NotFoundException;
 import ru.daria.serverbeyti.model.Client;
 import ru.daria.serverbeyti.model.Workers;
+import ru.daria.serverbeyti.service.ClientService;
+import ru.daria.serverbeyti.service.WorkersService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/client")
 public class ClientWorkersController {
 
-    private final ClientsRepository clientsRepository;
-    private final WorkersRepository workersRepository;
+    private final ClientService clientService;
+    private final WorkersService workerService;
 
     @Operation(summary = " Получить список работников, связанных с конкретным клиентом, по идентификатору")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно получен"),
             @ApiResponse(responseCode = "404", description = "Работник не найден")
     })
-    @GetMapping("/{clientId}/workers")
+    @GetMapping("/{clientId}")
     public ResponseEntity<List<Workers>> getWorkersByClientId(@PathVariable Long clientId) {
-        List<Workers> workers = clientsRepository.getWorkersById(clientId);
+        List<Workers> workers = clientService.getWorkers(clientId);
+        if (workers == null || workers.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(workers);
     }
 
@@ -41,11 +44,13 @@ public class ClientWorkersController {
     })
     @GetMapping("/workers/{workerId}/clients")
     public ResponseEntity<List<Client>> getClientsByWorkerId(@PathVariable Long workerId) {
-
-        Workers worker = workersRepository.findById(workerId).orElseThrow(() -> new NotFoundException("Worker not found"));
-        List<Client> clients = worker.getClients();
-
-        return ResponseEntity.ok(clients);
+        Optional<Workers> worker = workerService.findByIdWorker(workerId);
+        if (worker.isPresent()) {
+            List<Client> clients = worker.get().getClients();
+            return ResponseEntity.ok(clients);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Поиск клиентов в базе данных по имени")
@@ -54,7 +59,7 @@ public class ClientWorkersController {
     })
     @GetMapping("/search/{name}")
     public ResponseEntity<List<Client>> findClientsByName(@PathVariable String name) {
-        List<Client> clients = clientsRepository.findByName(name);
+        List<Client> clients = clientService.findByNameClient(name);
         return ResponseEntity.ok(clients);
     }
 }

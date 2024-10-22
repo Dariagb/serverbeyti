@@ -23,13 +23,10 @@ public class Product {
     @Column(name = "volume")
     private Long volume;
 
-    @Column(name = "country")
-    private String country;
-
     @Column(name = "price")
     private Long price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturerId")
     private Manufacturer manufacturer;
 }

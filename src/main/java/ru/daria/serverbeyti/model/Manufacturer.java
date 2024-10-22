@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ import java.util.List;
 @Table(name = "manufacturer")
 public class Manufacturer {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long manufacturerId;
 
     @Column(name = "name")
@@ -28,7 +29,12 @@ public class Manufacturer {
     @Column(name="phone")
     String phoneNumber;
 
-    @OneToMany(targetEntity = Product.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "mp",referencedColumnName = "manufacturerId")
+    @Column(name="country")
+    String country;
+
+    @OneToMany(mappedBy = "manufacturer")
     private List<Product> products;
+//    @OneToMany(targetEntity = Product.class)
+//    @JoinColumn(name = "mp",referencedColumnName = "manufacturerId")
+//    private List<Product> products;
 }

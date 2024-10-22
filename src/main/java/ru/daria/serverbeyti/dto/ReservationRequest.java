@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import ru.daria.serverbeyti.model.Manufacturer;
-import ru.daria.serverbeyti.model.Product;
 
 @Data
 @NoArgsConstructor

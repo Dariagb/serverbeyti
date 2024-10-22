@@ -3,6 +3,7 @@ package ru.daria.serverbeyti.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.daria.serverbeyti.dao.ClientsRepository;
+import ru.daria.serverbeyti.dao.WorkersRepository;
 import ru.daria.serverbeyti.model.Client;
 import ru.daria.serverbeyti.model.Workers;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class ClientService {
 
     private final ClientsRepository clientsRepository;
+    private final WorkersRepository workersRepository;
 
     public Client createClient(Client client) {
         return clientsRepository.save(client);
@@ -26,4 +28,12 @@ public class ClientService {
        clientsRepository.deleteById(id);
     }
 
+    public List<Workers> getWorkers(Long clientId) {
+        return workersRepository.findWorkersByClientId(clientId);
+    }
+
+    public List<Client> findByNameClient(String name) {
+        return clientsRepository.findByName(name);
+    }
 }
+
