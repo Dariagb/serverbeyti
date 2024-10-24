@@ -34,7 +34,5 @@ public class Manufacturer {
 
     @OneToMany(mappedBy = "manufacturer")
     private List<Product> products;
-//    @OneToMany(targetEntity = Product.class)
-//    @JoinColumn(name = "mp",referencedColumnName = "manufacturerId")
-//    private List<Product> products;
+
 }

@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.daria.serverbeyti.dto.OrderResponse;
 import ru.daria.serverbeyti.dto.ReservationRequest;
@@ -22,7 +24,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-        @Operation(summary = "Получить все продукты конкретного производителя по его ID.")
+    @Operation(summary = "Получить все продукты конкретного производителя по его ID.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Получен"),
             @ApiResponse(responseCode = "404", description = "Не найден")
     })
@@ -31,19 +33,21 @@ public class ReservationController {
         return reservationService.getProductsByManufacturer(manufacturerId);
     }
 
-        @Operation(summary = "Создать нового производителя.")
+    @Operation(summary = "Создать нового производителя.")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно создан"),
             @ApiResponse(responseCode = "404", description = "Товар не создан")
     })
     @PostMapping("/manufacturers")
-    public Manufacturer createManufacturer(@RequestBody Manufacturer manufacturer) {
-        return reservationService.createManufacturer(manufacturer);
+    public ResponseEntity<Manufacturer> createManufacturer(@RequestBody Manufacturer manufacturer) {
+        Manufacturer createdManufacturer = reservationService.createManufacturer(manufacturer);
+        return new ResponseEntity<>(createdManufacturer, HttpStatus.CREATED);
     }
 
     @PostMapping("/placeOrder")
     @Operation(summary = "Разместить заказ .")
-    public Manufacturer placeOrder(@RequestBody ReservationRequest reservationRequest){
-        return reservationService.placeOrder(reservationRequest);
+    public ResponseEntity<Manufacturer>  placeOrder(@RequestBody ReservationRequest reservationRequest){
+        Manufacturer manufacturer = reservationService.placeOrder(reservationRequest);
+        return new ResponseEntity<>(manufacturer,HttpStatus.OK);
     }
 
     @GetMapping("/findAllOrders")
