@@ -4,8 +4,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import ru.daria.serverbeyti.dao.ClientsRepository;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.service.ProductService;
+import ru.daria.serverbeyti.service.ReservationService;
 
 @SpringBootTest(classes = TestBeans.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -17,5 +19,10 @@ public abstract class AbstractSpringBootTest {
 
     @MockBean
     protected ProductRepository productRepository;
+    @MockBean
+    protected ReservationService reservationService;
+
+    @MockBean
+    protected ClientsRepository clientsRepository;
 
 }

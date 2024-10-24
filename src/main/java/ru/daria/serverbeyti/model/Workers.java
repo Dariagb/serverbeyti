@@ -34,7 +34,7 @@ public class Workers {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "client_workers",
             joinColumns = @JoinColumn(name = "worker_id"),

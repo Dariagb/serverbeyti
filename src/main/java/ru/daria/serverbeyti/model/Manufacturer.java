@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,10 @@ public class Manufacturer {
     @Column(name="phone")
     String phoneNumber;
 
-    @OneToMany(mappedBy ="manufacturer")
+    @Column(name="country")
+    String country;
+
+    @OneToMany(mappedBy = "manufacturer")
     private List<Product> products;
+
 }

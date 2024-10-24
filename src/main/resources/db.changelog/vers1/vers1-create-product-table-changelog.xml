@@ -17,9 +17,6 @@
         <column name="volume" type="bigint">
             <constraints nullable="true"/>
         </column>
-        <column name="country" type="varchar(60)">
-            <constraints nullable="true"/>
-        </column>
         <column name="price" type="bigint">
             <constraints nullable="true"/>
         </column>

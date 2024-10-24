@@ -33,4 +33,8 @@ public class WorkersService {
     public List<Workers> getWorkersByPost(String post) {
         return workersRepository.findAllByPost(post);
     }
+
+    public Optional<Workers> findByIdWorker(Long workerId) {
+        return workersRepository.findById(workerId);
+    }
 }
