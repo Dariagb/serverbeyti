@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 class ProductControllerTest extends AbstractSpringBootTest {
 
     @Autowired
-    private ReservationController controller;
+    private ProductController controller;
 
     @Test
     void productController_сreatePaint_test() {

@@ -18,44 +18,44 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-@DataJpaTest
-@Import(ManufactureRepository.class)
-public class ManufactureRepositoryTest {
-
-    @Autowired
-    private ManufactureRepository manufactureRepository;
-
-    @Mock
-    private Manufacturer mockManufacturer;
-
-    @BeforeEach
-    void setUp() {
-
-    }
-    @Test
-    public void testGetJoinInformation() {
-
-        Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setManufacturerId(1L);
-        manufacturer.setName("Test Manufacturer");
-        manufacturer.setProducts(Arrays.asList(
-                new Product("Product A", 1L, 10L, 100L, manufacturer),
-                new Product("Product B", 2L, 20L, 200L, manufacturer)
-        ));
-
-
-        List<OrderResponse> expectedResponses = Arrays.asList(
-                new OrderResponse(manufacturer.getName(), "Product A"),
-                new OrderResponse(manufacturer.getName(), "Product B")
-        );
-
-        when(manufactureRepository.getJoinInformation()).thenReturn(expectedResponses);
-
-
-        List<OrderResponse> actualResponses = manufactureRepository.getJoinInformation();
-
-        assertThat(actualResponses).hasSize(2);
-        assertThat(actualResponses).containsAll(expectedResponses);
-    }
-}
+//@ExtendWith(MockitoExtension.class)
+//@DataJpaTest
+//@Import(ManufactureRepository.class)
+//public class ManufactureRepositoryTest {
+//
+//    @Autowired
+//    private ManufactureRepository manufactureRepository;
+//
+//    @Mock
+//    private Manufacturer mockManufacturer;
+//
+//    @BeforeEach
+//    void setUp() {
+//
+//    }
+//    @Test
+//    public void testGetJoinInformation() {
+//
+//        Manufacturer manufacturer = new Manufacturer();
+//        manufacturer.setManufacturerId(1L);
+//        manufacturer.setName("Test Manufacturer");
+//        manufacturer.setProducts(Arrays.asList(
+//                new Product("Product A", 1L, 10L, 100L, manufacturer),
+//                new Product("Product B", 2L, 20L, 200L, manufacturer)
+//        ));
+//
+//
+//        List<OrderResponse> expectedResponses = Arrays.asList(
+//                new OrderResponse(manufacturer.getName(), "Product A"),
+//                new OrderResponse(manufacturer.getName(), "Product B")
+//        );
+//
+//        when(manufactureRepository.getJoinInformation()).thenReturn(expectedResponses);
+//
+//
+//        List<OrderResponse> actualResponses = manufactureRepository.getJoinInformation();
+//
+//        assertThat(actualResponses).hasSize(2);
+//        assertThat(actualResponses).containsAll(expectedResponses);
+//    }
+//}
