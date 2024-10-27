@@ -35,7 +35,7 @@ class ReservationServiceTest {
     void getProductsByManufacturer() {
         Long manufacturerId = 1L;
         Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setManufacturerId(manufacturerId);
+        manufacturer.setId(manufacturerId);
 
         Product product1 = new Product();
         product1.setManufacturer(manufacturer);

@@ -1,12 +1,12 @@
 package ru.daria.serverbeyti.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +18,7 @@ import java.util.List;
 public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long manufacturerId;
+    private Long id;
 
     @Column(name = "name")
     String name;

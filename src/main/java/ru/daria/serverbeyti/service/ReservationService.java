@@ -23,7 +23,7 @@ public class ReservationService {
         return productRepository.findAll()
                 .stream()
                 .filter(product -> product.getManufacturer() != null &&
-                        product.getManufacturer().getManufacturerId().equals(manufacturerId))
+                        product.getManufacturer().getId().equals(manufacturerId))
                 .collect(Collectors.toList());
     }
 

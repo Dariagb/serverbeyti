@@ -39,7 +39,7 @@ class ReservationControllerTest extends AbstractSpringBootTest {
     @Test
     void createManufacturer() {
         Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setManufacturerId(1L);
+        manufacturer.setId(1L);
 
         when(reservationService.createManufacturer(manufacturer)).thenReturn(manufacturer);
 
@@ -54,7 +54,7 @@ class ReservationControllerTest extends AbstractSpringBootTest {
 
         ReservationRequest reservationRequest = new ReservationRequest();
         Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setManufacturerId(1L);
+        manufacturer.setId(1L);
 
         when(reservationService.placeOrder(reservationRequest)).thenReturn(manufacturer);
 
