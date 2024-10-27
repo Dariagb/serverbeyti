@@ -2,17 +2,15 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="add-manufacturer-to-product" author="Belousova Daria">
-        <addColumn tableName="product">
-            <column name="manufacturerId" type="bigint"/>
-        </addColumn>
-        <addForeignKeyConstraint
-                baseTableName="product"
-                baseColumnNames="id"
-                referencedTableName="manufacturer"
-                referencedColumnNames="id"
-                constraintName="fk_product_manufacturer"/>
-    </changeSet>
+<changeSet id="add-manufacturer-to-product" author="Belousova Daria">
+    <addColumn tableName="product">
+        <column name="manufacturer_id" type="bigint"/>
+    </addColumn>
+    <addForeignKeyConstraint
+            baseTableName="product"
+            baseColumnNames="manufacturer_id"
+    referencedTableName="manufacturer"
+    referencedColumnNames="id"
+    constraintName="fk_product_manufacturer"/>
+</changeSet>
 </databaseChangeLog>
-
-

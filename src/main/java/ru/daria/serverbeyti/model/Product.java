@@ -1,5 +1,6 @@
 package ru.daria.serverbeyti.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class Product {
     private Long price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "manufacturerId")
+    @JoinColumn(name = "manufacturer_id")
+    @JsonIgnore
     private Manufacturer manufacturer;
 }
