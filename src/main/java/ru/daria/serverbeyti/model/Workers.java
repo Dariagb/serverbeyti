@@ -1,5 +1,6 @@
 package ru.daria.serverbeyti.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +36,7 @@ public class Workers {
     private String phone;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinTable(
             name = "client_workers",
             joinColumns = @JoinColumn(name = "worker_id"),

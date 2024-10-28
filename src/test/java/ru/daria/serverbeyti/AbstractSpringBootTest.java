@@ -6,6 +6,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.daria.serverbeyti.dao.ClientsRepository;
 import ru.daria.serverbeyti.dao.ProductRepository;
+import ru.daria.serverbeyti.dao.WorkersRepository;
 import ru.daria.serverbeyti.service.ProductService;
 import ru.daria.serverbeyti.service.ReservationService;
 
@@ -24,5 +25,7 @@ public abstract class AbstractSpringBootTest {
 
     @MockBean
     protected ClientsRepository clientsRepository;
+    @MockBean
+    protected WorkersRepository workersRepository;
 
 }
