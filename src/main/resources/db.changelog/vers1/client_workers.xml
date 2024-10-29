@@ -5,7 +5,7 @@
 
     <changeSet id="create_client_workers_table" author="Belousova Daria">
         <createTable tableName="client_workers">
-            <column name="client_id" type="bigint">
+            <column name="client_id" type="bigint" autoIncrement="true">
                 <constraints nullable="false"/>
             </column>
             <column name="worker_id" type="bigint">

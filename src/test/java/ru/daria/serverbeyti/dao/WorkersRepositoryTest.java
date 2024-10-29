@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class WorkersRepositoryTest extends AbstractSpringBootTest {
     @Test
     public void testFindBySurname() {
@@ -78,3 +77,4 @@ public class WorkersRepositoryTest extends AbstractSpringBootTest {
         assertThat(workers.get(0).getClients()).contains(client);
     }
 }
+

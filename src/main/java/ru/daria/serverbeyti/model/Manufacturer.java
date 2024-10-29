@@ -1,6 +1,5 @@
 package ru.daria.serverbeyti.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,5 +33,4 @@ public class Manufacturer {
 
     @OneToMany(mappedBy = "manufacturer")
     private List<Product> products;
-
 }
