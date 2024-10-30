@@ -30,12 +30,12 @@ class WorkersServiceTest {
         Workers worker = new Workers();
         worker.setSurname(surname);
 
-        when(workersRepository.findBySurname(surname)).thenReturn(Optional.of(worker));
+        when(workersRepository.findBySurname(surname)).thenReturn(List.of(worker));
 
-        Optional<Workers> result = workersServise.getWorkersBySurname(surname);
+        List<Workers> result = workersServise.getWorkersBySurname(surname);
 
-        assertTrue(result.isPresent());
-        assertEquals(result.get(), worker);
+        assertFalse(result.isEmpty());
+        assertEquals(result.get(0), worker);
     }
 
     @Test

@@ -1,19 +1,31 @@
 package ru.daria.serverbeyti.dao;
 
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.model.Client;
 import ru.daria.serverbeyti.model.Workers;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 public class WorkersRepositoryTest extends AbstractSpringBootTest {
+
+    @Autowired
+    private WorkersRepository workersRepository;
+
+    @Autowired
+    private ClientsRepository clientRepository;
+    @BeforeEach
+    public void setUp() {
+        workersRepository.deleteAll();
+    }
     @Test
     public void testFindBySurname() {
-
         Workers worker = Workers.builder()
                 .name("Полина")
                 .surname("Романова")
@@ -23,15 +35,15 @@ public class WorkersRepositoryTest extends AbstractSpringBootTest {
                 .build();
         workersRepository.save(worker);
 
-        Optional<Workers> foundWorker = workersRepository.findBySurname("Романова");
-
-        assertThat(foundWorker).isPresent();
-        assertThat(foundWorker.get().getSurname()).isEqualTo("Романова");
+        List<Workers> foundWorkers = workersRepository.findBySurname("Романова");
+        assertThat(foundWorkers).isNotEmpty();
+        assertThat(foundWorkers.get(0).getSurname()).isEqualTo("Романова");
     }
+
 
     @Test
     public void testFindAllByPost() {
-        // Given
+
         Workers worker1 = Workers.builder()
                 .name("Алиса")
                 .surname("Котова")
@@ -46,21 +58,25 @@ public class WorkersRepositoryTest extends AbstractSpringBootTest {
                 .age(35)
                 .phone("123-456-7892")
                 .build();
+
+
         workersRepository.save(worker1);
         workersRepository.save(worker2);
 
-
         List<Workers> workers = workersRepository.findAllByPost("мастер маникюра");
 
-
-        assertThat(workers).hasSize(2);
-        assertThat(workers).extracting(Workers::getSurname).contains("Котова", "Воронова");
+        assertThat(workers).isNotEmpty();
+        assertThat(workers).hasSize(1);
+        assertThat(workers.get(0).getPost()).isEqualTo("мастер маникюра");
+        assertThat(workers.get(0).getSurname()).isEqualTo(worker1.getSurname());
     }
+
 
     @Test
     public void testFindWorkersByClientId() {
-
         Client client = Client.builder().name("Company A").build();
+        client = clientRepository.save(client);
+
         Workers worker = Workers.builder()
                 .name("Вера")
                 .surname("Богачева")

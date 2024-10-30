@@ -28,7 +28,7 @@ public abstract class AbstractSpringBootTest {
     @Autowired
     protected ClientsRepository clientsRepository;
 
-    @MockBean
+    @Autowired
     protected WorkersRepository workersRepository;
 
     @Autowired

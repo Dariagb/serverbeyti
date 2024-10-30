@@ -2,7 +2,6 @@ package ru.daria.serverbeyti.dao;
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.dto.OrderResponse;
 import ru.daria.serverbeyti.model.Manufacturer;
@@ -10,34 +9,33 @@ import ru.daria.serverbeyti.model.Product;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class ManufactureRepositoryTest extends AbstractSpringBootTest {
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    ManufactureRepository manufactureRepository;
+public class ManufactureRepositoryTest extends AbstractSpringBootTest{
 
     @Test
     @Transactional
-    void testGetJoinInformation() {
-
+    public void testGetJoinInformation() {
         Manufacturer manufacturer = new Manufacturer();
-        manufacturer.setName("Астория");
-
+        manufacturer.setName("Косметик групп");
         manufactureRepository.save(manufacturer);
+
         Product product = new Product();
-        product.setName("Продукт 1");
+        product.setName("Estel");
         product.setManufacturer(manufacturer);
         productRepository.save(product);
 
         List<OrderResponse> joinInformation = manufactureRepository.getJoinInformation();
 
         assertNotNull(joinInformation);
-        assertTrue(joinInformation.size() > 0, "Должна быть хотя бы одна запись");
+        assertFalse(joinInformation.isEmpty(), "Должна быть хотя бы одна запись");
+
+        assertEquals("Estel", joinInformation.get(0).getProductName());
+        assertEquals("Косметик групп", joinInformation.get(0).getManufacturerName());
     }
 }
+
+
 
 
 

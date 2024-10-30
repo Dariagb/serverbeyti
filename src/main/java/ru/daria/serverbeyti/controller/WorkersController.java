@@ -14,6 +14,7 @@ import ru.daria.serverbeyti.service.WorkersService;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
@@ -31,7 +32,7 @@ public class WorkersController {
     @PostMapping
     public ResponseEntity<Workers> createWorker(@RequestBody Workers workers) {
         workers=workersServise.createWorkers(workers);
-        return new ResponseEntity<>(workers, HttpStatus.CREATED);
+        return new ResponseEntity<>(workers, CREATED);
     }
 
     @Operation(summary = "Получить всех работников", description = "Возвращает всех работников")
@@ -40,7 +41,7 @@ public class WorkersController {
     })
     @GetMapping
     public ResponseEntity<List<Workers>> readAllWorkers() {
-        return new ResponseEntity<>(workersServise.readAllWorkers(), HttpStatus.OK);
+        return new ResponseEntity<>(workersServise.readAllWorkers(), OK);
     }
 
     @Operation(summary = "Получить работников по должности", description = "Возвращает фамилию и имя")
@@ -64,10 +65,13 @@ public class WorkersController {
     })
     @GetMapping("/surname/{surname}")
     public ResponseEntity<Workers> getWorkersBySurname(@PathVariable String surname) {
-        Optional<Workers> worker = workersServise.getWorkersBySurname(surname);
+        List<Workers> workers = workersServise.getWorkersBySurname(surname);
 
-        return worker.map(p -> status(HttpStatus.OK).body(p))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (!workers.isEmpty()) {
+            return ResponseEntity.ok(workers.get(0)); // Возвращаем первого найденного работника
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Удалить работника", description = "Удаляем работника по id")

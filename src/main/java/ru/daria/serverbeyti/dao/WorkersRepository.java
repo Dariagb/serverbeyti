@@ -7,11 +7,10 @@ import org.springframework.stereotype.Repository;
 import ru.daria.serverbeyti.model.Workers;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface WorkersRepository extends JpaRepository<Workers, Long> {
-    Optional<Workers> findBySurname(String surname);
+    List<Workers> findBySurname(String surname);
 
     List<Workers> findAllByPost(String post);
 

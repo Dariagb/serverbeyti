@@ -14,7 +14,7 @@ public class WorkersService {
 
     private final WorkersRepository workersRepository;
 
-    public Optional<Workers> getWorkersBySurname(String surname) {
+    public List<Workers> getWorkersBySurname(String surname) {
         return workersRepository.findBySurname(surname);
     }
 

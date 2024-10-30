@@ -1,6 +1,8 @@
 package ru.daria.serverbeyti;
 
+import org.springframework.boot.devtools.restart.RestartScope;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -14,6 +16,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public class TestBeans {
 
     @Bean(initMethod = "start", destroyMethod = "stop")
+    @RestartScope
+    @ServiceConnection
     public PostgreSQLContainer postgreSQLContainer() {
         return new PostgreSQLContainer<>("postgres:15");
     }
