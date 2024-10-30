@@ -8,7 +8,6 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @TestConfiguration
@@ -17,7 +16,7 @@ public class TestBeans {
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     @RestartScope
-    @ServiceConnection
+//    @ServiceConnection
     public PostgreSQLContainer postgreSQLContainer() {
         return new PostgreSQLContainer<>("postgres:15");
     }
@@ -34,3 +33,4 @@ public class TestBeans {
         kafkaContainer.start();
     }
 }
+

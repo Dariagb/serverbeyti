@@ -1,10 +1,9 @@
 package ru.daria.serverbeyti;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.context.annotation.Import;
 import ru.daria.serverbeyti.dao.ClientsRepository;
 import ru.daria.serverbeyti.dao.ManufactureRepository;
 import ru.daria.serverbeyti.dao.ProductRepository;
@@ -12,9 +11,8 @@ import ru.daria.serverbeyti.dao.WorkersRepository;
 import ru.daria.serverbeyti.service.ProductService;
 import ru.daria.serverbeyti.service.ReservationService;
 
-@SpringBootTest(classes = TestBeans.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Testcontainers
+@SpringBootTest
+@Import( TestBeans.class)
 public abstract class AbstractSpringBootTest {
     @MockBean
     protected ProductService productService;
