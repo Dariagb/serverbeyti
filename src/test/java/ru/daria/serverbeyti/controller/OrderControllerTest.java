@@ -8,13 +8,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import ru.daria.serverbeyti.AbstractSpringBootTest;
 import ru.daria.serverbeyti.kafka.Producer;
 
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(OrderController.class)
-class OrderControllerTest {
+class OrderControllerTest{
 
     @Autowired
     private MockMvc mockMvc;

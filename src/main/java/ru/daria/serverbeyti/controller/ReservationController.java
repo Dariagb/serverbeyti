@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.daria.serverbeyti.dto.OrderResponse;
 import ru.daria.serverbeyti.dto.ReservationRequest;
@@ -45,6 +46,7 @@ public class ReservationController {
 
     @PostMapping("/placeOrder")
     @Operation(summary = "Разместить заказ .")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Manufacturer>  placeOrder(@RequestBody ReservationRequest reservationRequest){
         Manufacturer manufacturer = reservationService.placeOrder(reservationRequest);
         return new ResponseEntity<>(manufacturer,HttpStatus.OK);

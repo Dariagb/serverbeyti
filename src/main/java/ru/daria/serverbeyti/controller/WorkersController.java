@@ -5,17 +5,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.daria.serverbeyti.model.Workers;
 import ru.daria.serverbeyti.service.WorkersService;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.ResponseEntity.status;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +29,7 @@ public class WorkersController {
             @ApiResponse(responseCode = "404", description = "не найден")
     })
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Workers> createWorker(@RequestBody Workers workers) {
         workers=workersServise.createWorkers(workers);
         return new ResponseEntity<>(workers, CREATED);

@@ -14,8 +14,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public class TestBeans {
 
-    @Bean(initMethod = "start", destroyMethod = "stop")
-    @RestartScope
+    @Bean
+//    @RestartScope
 //    @ServiceConnection
     public PostgreSQLContainer postgreSQLContainer() {
         return new PostgreSQLContainer<>("postgres:15");

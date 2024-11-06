@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.daria.serverbeyti.dao.ProductRepository;
 import ru.daria.serverbeyti.dto.ProductDTO;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("product")
 @Tag(name = "products api", description = "управление задачами пользователя.")
+
 public class ProductController {
 
     private final ProductService productService;
@@ -53,6 +55,7 @@ public class ProductController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "\n" + "Успешно обновлен"),
             @ApiResponse(responseCode = "404", description = "Товар не найден")})
     @PutMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> updateProductPoint(@RequestBody Product product) {
         return new ResponseEntity<>(productService.updateProductPaint(product), HttpStatus.OK);
     }
@@ -62,6 +65,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Товар не найден")
     })
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<ProductDTO>> readAllPaint() {
         return new ResponseEntity<>(productService.readAllProductDTO(), HttpStatus.OK);
     }
