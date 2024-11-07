@@ -32,4 +32,5 @@ public abstract class AbstractSpringBootTest {
     @Autowired
     protected ManufactureRepository manufactureRepository;
 
+
 }

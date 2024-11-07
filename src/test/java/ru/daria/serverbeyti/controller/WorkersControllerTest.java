@@ -124,7 +124,6 @@ class WorkersControllerTest {
                 .phone("56789")
                 .build();
 
-        // Изменяем mock для возврата списка работников
         when(workersServise.getWorkersBySurname("Графова")).thenReturn(Collections.singletonList(worker));
 
         ResponseEntity<Workers> response = workersController.getWorkersBySurname("Графова");
@@ -132,16 +131,6 @@ class WorkersControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(worker, response.getBody());
     }
-
-//    @Test
-//    void getWorkersBySurname_NotFound() {
-//        String surname = "Попова";
-//        when(workersServise.getWorkersBySurname(surname)).thenReturn(Optional.empty());
-//
-//        ResponseEntity<Workers> response = workersController.getWorkersBySurname(surname);
-//
-//        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//    }
 
     @Test
     void deleteWorker() {

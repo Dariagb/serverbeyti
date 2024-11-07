@@ -40,7 +40,6 @@ public class WorkersRepositoryTest extends AbstractSpringBootTest {
         assertThat(foundWorkers.get(0).getSurname()).isEqualTo("Романова");
     }
 
-
     @Test
     public void testFindAllByPost() {
 
@@ -59,7 +58,6 @@ public class WorkersRepositoryTest extends AbstractSpringBootTest {
                 .phone("123-456-7892")
                 .build();
 
-
         workersRepository.save(worker1);
         workersRepository.save(worker2);
 
@@ -70,7 +68,6 @@ public class WorkersRepositoryTest extends AbstractSpringBootTest {
         assertThat(workers.get(0).getPost()).isEqualTo("мастер маникюра");
         assertThat(workers.get(0).getSurname()).isEqualTo(worker1.getSurname());
     }
-
 
     @Test
     public void testFindWorkersByClientId() {
